@@ -1,6 +1,5 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
-import { TokenSharp } from "@mui/icons-material";
 
 // color design Tokens
 
@@ -125,6 +124,7 @@ export const tokens = (mode) => ({
 export const themeSettings =(mode)=>{
     const colors = tokens(mode);
     return {
+        mode: mode,
         palette:{
             mode: mode,
             ...(mode === 'dark'
@@ -142,7 +142,11 @@ export const themeSettings =(mode)=>{
                     },
                     background:{
                         default:colors.primary[500]
-                    }
+                    },
+                    // Add focused state styles for dark mode
+                    text: {
+                        light: colors.primary[200],
+                    },
                 } : {
                     primary:{
                         main:colors.primary[100],
@@ -157,6 +161,9 @@ export const themeSettings =(mode)=>{
                     },
                     background:{
                         default:"#fcfcfc"
+                    },
+                    action: {
+                        focus: colors.primary[500],
                     },
                 }),
         },
@@ -210,3 +217,6 @@ export const useMode =  () => {
 
     return [theme, colorMode];
 }
+
+
+
