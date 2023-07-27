@@ -7,9 +7,28 @@ import  DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import  NotificationsModeOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import  PersonModeOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const Navbar = () => {
+    // State to keep track of user authentication status
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    // Function to check if the user is authenticated using localStorage
+    const isUserAuthenticated = () => {
+        const authToken = localStorage.getItem('accessToken');
+        return authToken !== null; // If authToken exists in localStorage, user is authenticated, otherwise not.
+    };
+
+    // Function to handle logout
+    const handleLogout = () => {
+        localStorage.removeItem('accessToken');
+        setIsLoggedIn(false);
+    };
+
+    // Run the authentication check on component mount (page load)
+  useEffect(() => {
+    setIsLoggedIn(isUserAuthenticated()); // Update the state based on authentication status
+  }, []);
     // NAVIGATION
     const navigate = useNavigate(); // Get the navigation function
     // Navigate to the '/register' route
@@ -33,28 +52,45 @@ const Navbar = () => {
         color: buttonTextcolor,
       };
       
-
+    
   return (  
     <Box display="flex" justifyContent="space-between" p={2}>
-        <h2>NotifyMed</h2>
+      <h2>NotifyMed</h2>
 
-        <Box>
-            <IconButton onClick={colorMode.toggleColorMode}> 
-            {theme.palette.mode === 'dark' ? (
-                <LightModeOutlinedIcon />
-            ) : (
-                <DarkModeOutlinedIcon />
-            )}
+      <Box>
+        <IconButton onClick={colorMode.toggleColorMode}>
+          {theme.palette.mode === 'dark' ? (
+            <LightModeOutlinedIcon />
+          ) : (
+            <DarkModeOutlinedIcon />
+          )}
+        </IconButton>
+
+        {isLoggedIn ? (
+          // Render these elements when the user is logged in
+          <>
+            <IconButton>
+              <NotificationsModeOutlinedIcon />
             </IconButton>
             <IconButton>
-                <NotificationsModeOutlinedIcon />
+              <PersonModeOutlinedIcon />
             </IconButton>
-            <IconButton>
-                <PersonModeOutlinedIcon />
-            </IconButton> 
-            <Button variant="text" style={{ color: buttonTextcolor }} onClick={LoginRoute}>Log In</Button>
-            <Button variant="outlined" style={outlinedButtonStyle} onClick={RegisterRoute}>Register</Button>
-        </Box>
+            <Button variant="text" style={{ color: buttonTextcolor }} onClick={handleLogout} >
+              Log Out
+            </Button>
+          </>
+        ) : (
+          // Render these elements when the user is not logged in
+          <>
+            <Button variant="text" style={{ color: buttonTextcolor }} onClick={LoginRoute}>
+              Log In
+            </Button>
+            <Button variant="outlined" style={outlinedButtonStyle} onClick={RegisterRoute}>
+              Register
+            </Button>
+          </>
+        )}
+      </Box>
     </Box>
   )
 } 

@@ -148,8 +148,7 @@ const Register = () => {
             }}/>
 
             <Box display={'flex'} justifyContent={'center'} p={5} flexDirection="column" alignItems="center">
-
-            <Button type="submit" variant="contained" sx={{}} className='submitB'> Submit</Button>
+              <Button type="submit" variant="contained" sx={{}} className='submitB'> Submit</Button>
             </Box>
         </form>
         {errMsg && <Alert severity="error">
