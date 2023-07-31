@@ -1,65 +1,63 @@
-import { Box, IconButton, useTheme } from '@mui/material';
-import { useContext } from 'react';
-import { ColorModeContext, tokens } from '../theme';
-import Button from '@mui/material/Button';
-import  LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
-import  DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
-import  NotificationsModeOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
-import  PersonModeOutlinedIcon from '@mui/icons-material/PersonOutlined';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Box, IconButton, useTheme } from "@mui/material";
+import { useContext } from "react";
+import { ColorModeContext, tokens } from "../theme";
+import Button from "@mui/material/Button";
+import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import NotificationsModeOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import PersonModeOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
-    // State to keep track of user authentication status
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // State to keep track of user authentication status
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    // Function to check if the user is authenticated using localStorage
-    const isUserAuthenticated = () => {
-        const authToken = localStorage.getItem('accessToken');
-        return authToken !== null; // If authToken exists in localStorage, user is authenticated, otherwise not.
-    };
+  // Function to check if the user is authenticated using localStorage
+  const isUserAuthenticated = () => {
+    const authToken = localStorage.getItem("accessToken");
+    return authToken !== null; // If authToken exists in localStorage, user is authenticated, otherwise not.
+  };
 
-    // Function to handle logout
-    const handleLogout = () => {
-        localStorage.removeItem('accessToken');
-        setIsLoggedIn(false);
-    };
+  // Function to handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    setIsLoggedIn(false);
+  };
 
-    // Run the authentication check on component mount (page load)
+  // Run the authentication check on component mount (page load)
   useEffect(() => {
     setIsLoggedIn(isUserAuthenticated()); // Update the state based on authentication status
   }, []);
-    // NAVIGATION
-    const navigate = useNavigate(); // Get the navigation function
-    // Navigate to the '/register' route
-    const RegisterRoute = () => {
-        navigate('/register'); 
-    };
-    // Navigate to the '/register' route
-    const LoginRoute = () => {
-        navigate('/login'); 
-    };
+  // NAVIGATION
+  const navigate = useNavigate(); // Get the navigation function
+  // Navigate to the '/register' route
+  const RegisterRoute = () => {
+    navigate("/register");
+  };
+  // Navigate to the '/register' route
+  const LoginRoute = () => {
+    navigate("/login");
+  };
 
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
-    const colorMode = useContext(ColorModeContext);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const colorMode = useContext(ColorModeContext);
 
+  const outlinedButtonColor = colors.primary[100];
+  const buttonTextcolor = colors.primary[100];
+  const outlinedButtonStyle = {
+    borderColor: outlinedButtonColor,
+    color: buttonTextcolor,
+  };
 
-    const outlinedButtonColor = colors.primary[100]; 
-    const buttonTextcolor = colors.primary[100]; 
-    const outlinedButtonStyle = {
-        borderColor: outlinedButtonColor,
-        color: buttonTextcolor,
-      };
-      
-    
-  return (  
+  return (
     <Box display="flex" justifyContent="space-between" p={2}>
       <h2>NotifyMed</h2>
 
-      <Box>
+      <Box display="flex" alignItems="center">
         <IconButton onClick={colorMode.toggleColorMode}>
-          {theme.palette.mode === 'dark' ? (
+          {theme.palette.mode === "dark" ? (
             <LightModeOutlinedIcon />
           ) : (
             <DarkModeOutlinedIcon />
@@ -75,24 +73,36 @@ const Navbar = () => {
             <IconButton>
               <PersonModeOutlinedIcon />
             </IconButton>
-            <Button variant="text" style={{ color: buttonTextcolor }} onClick={handleLogout} >
+            <Button
+              variant="text"
+              style={{ color: buttonTextcolor }}
+              onClick={handleLogout}
+            >
               Log Out
             </Button>
           </>
         ) : (
           // Render these elements when the user is not logged in
           <>
-            <Button variant="text" style={{ color: buttonTextcolor }} onClick={LoginRoute}>
+            <Button
+              variant="text"
+              style={{ color: buttonTextcolor }}
+              onClick={LoginRoute}
+            >
               Log In
             </Button>
-            <Button variant="outlined" style={outlinedButtonStyle} onClick={RegisterRoute}>
+            <Button
+              variant="outlined"
+              style={outlinedButtonStyle}
+              onClick={RegisterRoute}
+            >
               Register
             </Button>
           </>
         )}
       </Box>
     </Box>
-  )
-} 
+  );
+};
 
-export default Navbar
+export default Navbar;
