@@ -11,12 +11,14 @@ import axios from "../../api/axios.js";
 import { useRef, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
+import { createStyles } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import Popper from "@mui/material/Popper";
+// import CustomPopper from "./components/CustomPopper.jsx";
 
 const socket = io.connect("http://localhost:4000");
 
-const LOGIN_URL = "/users/login";
-
-const Login = () => {
+const NotificationForm = () => {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
@@ -62,6 +64,48 @@ const Login = () => {
       // Update your app state or UI with the received notification
     });
   };
+
+  // CUSTOM POPPER ------------------------------------------------------------
+
+  // const useStyles = makeStyles((theme) =>
+  //   createStyles({
+  //     root: {
+  //       "& .MuiAutocomplete-listbox": {
+  //         border: `20px solid white`,
+  //         backgroundColor: theme.palette.background.primary,
+  //         color: theme.palette.text.light,
+  //       },
+  //     },
+  //   })
+  // );
+
+  const useStyles = makeStyles((theme) =>
+    createStyles({
+      root: {
+        "& .MuiAutocomplete-listbox": {
+          backgroundColor: theme.palette.background.popper,
+          "& li": {
+            color: theme.palette.mode === "dark" ? "white" : undefined,
+          },
+        },
+      },
+    })
+  );
+
+  function CustomPopper(props) {
+    const classes = useStyles(props.theme);
+
+    return (
+      <Popper
+        {...props}
+        className={classes.root}
+        placement="bottom"
+        elevation={5}
+      />
+    );
+  }
+
+  // END CUSTOM POPPER ------------------------------------------------------------
 
   return (
     <Box
@@ -145,6 +189,7 @@ const Login = () => {
             width: "100%",
             marginTop: "30px",
           }}
+          PopperComponent={CustomPopper}
           multiple
           id="tags-outlined"
           options={usersEmails}
@@ -185,4 +230,4 @@ const Login = () => {
     </Box>
   );
 };
-export default Login;
+export default NotificationForm;
