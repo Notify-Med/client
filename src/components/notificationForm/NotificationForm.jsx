@@ -155,12 +155,6 @@ const Login = () => {
           }}
           renderInput={(params) => (
             <TextField
-              sx={{
-                "& label.Mui-focused": {
-                  backgroundColor: theme.palette.background.primary, // Set the background color
-                  color: theme.palette.text.primary, // Set the text color
-                },
-              }}
               {...params}
               variant="standard"
               label="Receivers"
