@@ -4,6 +4,7 @@ import { ColorModeContext, tokens } from "../../theme";
 import axios from "../../api/axios.js";
 import { useTheme } from "@mui/material";
 import { useContext } from "react";
+import AuthContext from "../../context/AuthProvider";
 import { makeStyles } from "@mui/styles";
 import { createStyles } from "@mui/material";
 import NotificationForm from "../notificationForm/NotificationForm";
@@ -13,6 +14,8 @@ function Homepage() {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
+
+  const { socket } = useContext(AuthContext);
 
   const [notifications, setNotification] = useState([]); // ["email1", "email2"]
 
@@ -40,6 +43,14 @@ function Homepage() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    // Event listener for "newNotificationCreated" event
+    socket.on("newNotificationCreated", () => {
+      console.log("New notification created");
+      getNotifications(); // Fetch the latest notifications
+    });
+  }, []);
+
   return (
     <Box position={"relative"}>
       <Box width={"70vw"} height={"calc(100vh - 100px)"}>
@@ -65,7 +76,9 @@ function Homepage() {
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet",
           }}
         />
-        {notifications && notifications.length > 0 ? (
+        {notifications &&
+        notifications.length > 0 &&
+        Array.isArray(notifications) ? (
           notifications.map((notification, index) => (
             <NotificationCard notification={notification} key={index} />
           ))

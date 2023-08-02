@@ -9,6 +9,7 @@ import { ColorModeContext, tokens } from "../../theme";
 import { TextField, useTheme } from "@mui/material";
 import axios from "../../api/axios.js";
 import { useRef, useState, useEffect, useContext } from "react";
+import AuthContext from "../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import { createStyles } from "@mui/material";
@@ -16,13 +17,13 @@ import { makeStyles } from "@mui/styles";
 import Popper from "@mui/material/Popper";
 // import CustomPopper from "./components/CustomPopper.jsx";
 
-const socket = io.connect("http://localhost:4000");
-
 const NotificationForm = ({ p }) => {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
   console.log("mode :", theme.palette.mode);
+
+  const { socket } = useContext(AuthContext);
 
   const titleRef = useRef();
 
@@ -63,6 +64,8 @@ const NotificationForm = ({ p }) => {
 
       // Update your app state or UI with the received notification
     });
+    setTitle("");
+    setDescription("");
   };
 
   // CUSTOM POPPER ------------------------------------------------------------
