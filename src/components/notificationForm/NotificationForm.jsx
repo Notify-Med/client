@@ -18,7 +18,7 @@ import Popper from "@mui/material/Popper";
 
 const socket = io.connect("http://localhost:4000");
 
-const NotificationForm = () => {
+const NotificationForm = ({ p }) => {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
@@ -111,7 +111,7 @@ const NotificationForm = () => {
     <Box
       display={"flex"}
       justifyContent={"center"}
-      p={5}
+      p={5 + p}
       flexDirection="column"
       alignItems="center"
     >

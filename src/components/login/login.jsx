@@ -9,8 +9,7 @@ import { TextField, useTheme } from "@mui/material";
 import axios from "../../api/axios.js";
 import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from "../../context/AuthProvider";
-import { Link, useNavigate } from "react-router-dom";
-import { Home } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const LOGIN_URL = "/users/login";
 

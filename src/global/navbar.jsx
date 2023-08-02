@@ -52,7 +52,7 @@ const Navbar = () => {
   };
 
   return (
-    <Box display="flex" justifyContent="space-between" p={2}>
+    <Box display="flex" justifyContent="space-between" p={2} height={"100px"}>
       <h2>NotifyMed</h2>
 
       <Box display="flex" alignItems="center">
