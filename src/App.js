@@ -4,9 +4,9 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./global/navbar";
 import Login from "./components/login/login";
 import Register from "./components/register/register";
-// import Notification from "./components/notification";
+import HomePage from "./components/homePage/HomePage";
+import NotificationForm from "./components/notificationForm/NotificationForm";
 // import Profile from "./components/profile";
-
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -14,14 +14,15 @@ function App() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <CssBaseline/>
+        <CssBaseline />
         <div className="app">
           <main className="content">
             <Navbar />
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              {/* <Route path="/notification" element={<Notification />} /> */}
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/form" element={<NotificationForm />} />
               {/* <Route path="/profile" element={<Profile />} /> */}
             </Routes>
           </main>
