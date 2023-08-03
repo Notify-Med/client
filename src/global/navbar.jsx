@@ -1,5 +1,4 @@
 import { Box, IconButton, useTheme } from "@mui/material";
-import { useContext } from "react";
 import { ColorModeContext, tokens } from "../theme";
 import Button from "@mui/material/Button";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -7,9 +6,11 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsModeOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonModeOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState, useContext } from "react";
+import AuthContext from "../context/AuthProvider";
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
+  const { notifShown, setNotifShown } = useContext(AuthContext);
   // Function to check if the user is authenticated using localStorage
   const isUserAuthenticated = () => {
     const authToken = localStorage.getItem("accessToken");
@@ -65,7 +66,12 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
         {isLoggedIn ? (
           // Render these elements when the user is logged in
           <>
-            <IconButton>
+            <IconButton
+              onClick={() => {
+                setNotifShown(!notifShown);
+                console.log(notifShown);
+              }}
+            >
               <NotificationsModeOutlinedIcon />
             </IconButton>
             <IconButton>
