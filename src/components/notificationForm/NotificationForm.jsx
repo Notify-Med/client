@@ -21,7 +21,7 @@ const NotificationForm = ({ p }) => {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
-  console.log("mode :", theme.palette.mode);
+  // console.log("mode :", theme.palette.mode);
 
   const { socket } = useContext(AuthContext);
 

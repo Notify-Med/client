@@ -9,9 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import AuthContext from "../context/AuthProvider";
 
-const Navbar = () => {
-  // State to keep track of user authentication status
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const { notifShown, setNotifShown } = useContext(AuthContext);
 
   // Function to check if the user is authenticated using localStorage
@@ -24,12 +22,13 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     setIsLoggedIn(false);
+    navigate("/");
   };
 
   // Run the authentication check on component mount (page load)
   useEffect(() => {
     setIsLoggedIn(isUserAuthenticated()); // Update the state based on authentication status
-  }, []);
+  }, [setIsLoggedIn]);
   // NAVIGATION
   const navigate = useNavigate(); // Get the navigation function
   // Navigate to the '/register' route
