@@ -14,6 +14,23 @@ const LOGIN_URL = '/users/login';
 
 const Login = () => {
 
+  const getNotifs = async (e)=>{
+    e.preventDefault();
+
+    try {
+      const response = await axios.get(
+        '/notifications',
+        {headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+          'Content-Type': 'application/json', 
+        },}
+      )
+        console.log(response)  
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
@@ -54,7 +71,7 @@ const Login = () => {
 
       // Store the token in a cookie (using js-cookie)
       console.log('accessToken:', accessToken); // Add this line to check the value
-      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('accessToken', response?.data?.token);
 
 
       setAuth({ email, pwd, accessToken});
@@ -138,6 +155,12 @@ const Login = () => {
         {success && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
                       User logged in successfully.
                     </Alert>}
+
+
+
+          <Box display={'flex'} justifyContent={'center'} p={5} flexDirection="column" alignItems="center">
+            <Button variant="contained" sx={{}} className='submitB'onClick={getNotifs} > GET</Button>
+          </Box>
     </Box>
   )
 }
