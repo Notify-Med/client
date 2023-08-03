@@ -7,11 +7,10 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsModeOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonModeOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   // State to keep track of user authentication status
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Function to check if the user is authenticated using localStorage
   const isUserAuthenticated = () => {
@@ -23,12 +22,13 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     setIsLoggedIn(false);
+    navigate("/");
   };
 
   // Run the authentication check on component mount (page load)
   useEffect(() => {
     setIsLoggedIn(isUserAuthenticated()); // Update the state based on authentication status
-  }, []);
+  }, [setIsLoggedIn]);
   // NAVIGATION
   const navigate = useNavigate(); // Get the navigation function
   // Navigate to the '/register' route

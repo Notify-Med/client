@@ -13,31 +13,12 @@ import { useNavigate } from "react-router-dom";
 
 const LOGIN_URL = "/users/login";
 
-const Login = () => {
-
-
-  const getNotifs = async (e)=>{
-    e.preventDefault();
-
-    try {
-      const response = await axios.get(
-        '/notifications',
-        {headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-          'Content-Type': 'application/json', 
-        },}
-      )
-        console.log(response)  
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
+const Login = ({ isLoggedIn, setIsLoggedIn }) => {
 
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
-  console.log("mode :", theme.palette.mode);
+  // console.log("mode :", theme.palette.mode);
 
   const { setAuth } = useContext(AuthContext);
 
@@ -84,7 +65,7 @@ const Login = () => {
       setEmail("");
       setPwd("");
       setSuccess(true);
-
+      setIsLoggedIn(true);
       //HomeRef.current.click();
       navigate("/Home");
     } catch (err) {
@@ -179,49 +160,6 @@ const Login = () => {
         />
 
 
-        <TextField 
-            id="email"  
-            label="Email" 
-            variant="standard" 
-            ref={userRef}
-            autoComplete='off'
-            onChange={(e) => setEmail(e.target.value)} 
-            value={email}
-            required
-            sx={{
-              '& label.Mui-focused': {
-                color: theme.palette.mode === 'dark' ? theme.palette.text.light : undefined,
-              },
-              '& .MuiInput-underline:after': {
-                borderBottomColor: theme.palette.mode === 'dark' ? theme.palette.text.light : undefined,
-              },
-              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: theme.palette.mode === 'dark' ? theme.palette.text.light : undefined,
-              },
-              width: '100%',
-              marginTop: '30px'
-            }}/>
-            <TextField 
-            id="password" 
-            label="Password" 
-            variant="standard" 
-            type="password"
-            onChange={(e) => setPwd(e.target.value)} 
-            value={pwd}
-            required
-            sx={{
-              '& label.Mui-focused': {
-                color: theme.palette.mode === 'dark' ? theme.palette.text.light : undefined,
-              },
-              '& .MuiInput-underline:after': {
-                borderBottomColor: theme.palette.mode === 'dark' ? theme.palette.text.light : undefined,
-              },
-              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: theme.palette.mode === 'dark' ? theme.palette.text.light : undefined,
-              },
-              width: '100%',
-              marginTop: '30px'
-            }}/>
 
           <Box display={'flex'} justifyContent={'center'} p={5} flexDirection="column" alignItems="center">
             <Button type="submit" variant="contained" sx={{}} className='submitB'> Submit</Button>
@@ -233,12 +171,6 @@ const Login = () => {
         {success && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
                       User logged in successfully.
                     </Alert>}
-
-
-
-          <Box display={'flex'} justifyContent={'center'} p={5} flexDirection="column" alignItems="center">
-            <Button variant="contained" sx={{}} className='submitB'onClick={getNotifs} > GET</Button>
-          </Box>
 
     </Box>
   );
