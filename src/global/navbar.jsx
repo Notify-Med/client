@@ -10,8 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
-  // State to keep track of user authentication status
-
   // Function to check if the user is authenticated using localStorage
   const isUserAuthenticated = () => {
     const authToken = localStorage.getItem("accessToken");
