@@ -12,14 +12,15 @@ function Homepage() {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
+  const { notifShown } = useContext(AuthContext);
 
   return (
     <Box position={"relative"}>
-      <Box width={"70vw"} height={"calc(100vh - 100px)"}>
+      <Box width={notifShown ? "70vw" : "100vw"} height={"calc(100vh - 100px)"}>
         <NotificationForm p={20} />
       </Box>
       <Box
-        width={"30vw"}
+        width={notifShown ? "30vw" : "0vw"}
         position="absolute"
         right={0}
         top={0}
