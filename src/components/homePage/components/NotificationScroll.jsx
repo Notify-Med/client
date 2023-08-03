@@ -26,10 +26,13 @@ function NotificationScroll() {
   // };
 
   const getNotifications = async () => {
-    const response = await axios.post("/notifications", {
-      id: localStorage.getItem("id"), //to change to get with header authorization
+    const response = await axios.get("/notifications", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Content-Type": "application/json",
+      },
     });
-    console.log(response.data);
+    console.log(response);
     setNotification(response.data);
   };
 

@@ -51,11 +51,11 @@ const Login = () => {
         }
       );
       console.log(JSON.stringify(response?.data));
-      const accessToken = JSON.stringify(response?.data?.token);
+      const accessToken = response?.data?.token;
 
       // Store the token in a cookie (using js-cookie)
       console.log("accessToken:", accessToken); // Add this line to check the value
-      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("accessToken", response?.data?.token);
       console.log("id: ", response?.data?._id);
       localStorage.setItem("id", response?.data?._id);
 
