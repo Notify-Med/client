@@ -21,6 +21,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   // Function to handle logout
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("id");
     setIsLoggedIn(false);
     navigate("/login  ");
   };
@@ -38,6 +39,10 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   // Navigate to the '/register' route
   const LoginRoute = () => {
     navigate("/login");
+  };
+
+  const notifRoute = () => {
+    navigate("/my-notifications");
   };
 
   const theme = useTheme();
@@ -75,7 +80,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             >
               <NotificationsModeOutlinedIcon />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={notifRoute}>
               <PersonModeOutlinedIcon />
             </IconButton>
             <Button

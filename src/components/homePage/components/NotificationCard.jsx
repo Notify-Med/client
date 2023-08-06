@@ -1,15 +1,38 @@
 import { Box, TextField, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { ColorModeContext, tokens } from "../../../theme";
 import { useTheme } from "@mui/material";
 import { useContext } from "react";
 import { makeStyles } from "@mui/styles";
 import { createStyles } from "@mui/material";
+import axios from "../../../api/axios";
 
 function NotificationCard({ notification }) {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
+  const [log, setLog] = useState(notification.log);
+
+  const handleLog = async () => {
+    if (!log) {
+      setLog(true);
+      const response = await axios.put(
+        `/notifications/${notification.id}`,
+        {
+          log: true,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("response:", response);
+    }
+    setLog(false);
+  };
 
   return (
     <Box
@@ -23,6 +46,7 @@ function NotificationCard({ notification }) {
       alignItems={"flex-start"}
       backgroundColor={theme.palette.background.default}
       borderRadius={5}
+      position={"relative"}
     >
       <Box
         width={"100%"}
@@ -46,6 +70,18 @@ function NotificationCard({ notification }) {
         {notification.sender}
       </Typography>
       <Typography variant={"body1"}>{notification.description}</Typography>
+      {!notification.log && (
+        <Box
+          position={"absolute"}
+          right="10px"
+          bottom={"10px"}
+          width={"15px"}
+          height={"15px"}
+          borderRadius={"50%"}
+          backgroundColor={"white"}
+          onClick={handleLog}
+        ></Box>
+      )}
     </Box>
   );
 }
