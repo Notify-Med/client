@@ -5,6 +5,8 @@ import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsModeOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonModeOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import AuthContext from "../context/AuthProvider";
@@ -45,6 +47,10 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
     navigate("/my-notifications");
   };
 
+  const sentRoute = () => {
+    navigate("/sent-notifications");
+  };
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
@@ -72,6 +78,12 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
         {isLoggedIn ? (
           // Render these elements when the user is logged in
           <>
+            <IconButton onClick={sentRoute}>
+              <SendOutlinedIcon />
+            </IconButton>
+            <IconButton onClick={notifRoute}>
+              <MailOutlineOutlinedIcon />
+            </IconButton>
             <IconButton
               onClick={() => {
                 setNotifShown(!notifShown);
@@ -80,9 +92,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             >
               <NotificationsModeOutlinedIcon />
             </IconButton>
-            <IconButton onClick={notifRoute}>
+            {/* <IconButton onClick={notifRoute}>
               <PersonModeOutlinedIcon />
-            </IconButton>
+            </IconButton> */}
             <Button
               variant="text"
               style={{ color: buttonTextcolor }}

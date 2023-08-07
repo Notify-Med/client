@@ -45,7 +45,7 @@ function NotificationScroll({ type }) {
 
   useEffect(() => {
     // Event listener for "newNotificationCreated" event
-    socket.on("newNotificationCreated", () => {
+    socket.on("update", () => {
       console.log("New notification created");
       getNotifications(); // Fetch the latest notifications
     });
