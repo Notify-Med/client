@@ -1,13 +1,14 @@
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import Navbar from "./global/navbar";
 import Login from "./components/login/login";
 import Register from "./components/register/register";
 import HomePage from "./components/homePage/HomePage";
 import NotificationForm from "./components/notificationForm/NotificationForm";
-import { useState } from "react";
 import NotificationPage from "./components/notificationPage/NotificationPage";
+import SentNotificationPage from "./components/sentNotificationsPage/SentNotificationsPage";
 // import Profile from "./components/profile";
 
 function App() {
@@ -35,7 +36,10 @@ function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/form" element={<NotificationForm />} />
               <Route path="/my-notifications" element={<NotificationPage />} />
-              {/* <Route path="/profile" element={<Profile />} /> */}
+              <Route
+                path="/sent-notifications"
+                element={<SentNotificationPage />}
+              />
             </Routes>
           </main>
         </div>

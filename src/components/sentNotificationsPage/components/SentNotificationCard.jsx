@@ -1,38 +1,23 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, List, ListItem, ListItemText } from "@mui/material";
 import React, { useState } from "react";
 import { ColorModeContext, tokens } from "../../../theme";
 import { useTheme } from "@mui/material";
 import { useContext } from "react";
 import AuthContext from "../../../context/AuthProvider";
+import axios from "../../../api/axios";
 
-function NotificationCard({ notification }) {
+function SentNotificationCard({ notification }) {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
-  const [log, setLog] = useState(notification.log);
-
-  const { socket } = useContext(AuthContext);
-
-  const handleLog = async () => {
-    if (!log) {
-      setLog(true);
-      socket.emit("updateNotificationLog", {
-        receiverId: localStorage.getItem("id"),
-        notifId: notification.id,
-      });
-      socket.on("notificationLogUpdated", (notification) => {
-        console.log("Notification log updated:", notification);
-      });
-      setLog(false);
-    }
-  };
+  const [sentNotifs, setSentNotifs] = useState([]);
 
   return (
     <Box
       p={2}
       mt={2}
       mb={2}
-      width={"100%"}
+      width={"50%"}
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
@@ -56,29 +41,24 @@ function NotificationCard({ notification }) {
           {notification.date}
         </Typography>
       </Box>
-      <Typography
-        variant={"h"}
-        sx={{ color: theme.palette.text.light, marginBottom: "10px" }}
-      >
+      <Typography variant={"h"} sx={{ color: theme.palette.text.light }}>
         {notification.sender}
       </Typography>
+      <List sx={{ width: "100%", maxWidth: 360 }}>
+        {notification.receivers.map((value, index) => (
+          <ListItem
+            sx={{ padding: "0" }}
+            key={index}
+            disableGutters
+            secondaryAction={<Typography> {`${value.log}`} </Typography>}
+          >
+            <ListItemText primary={`${value.name}`} />
+          </ListItem>
+        ))}
+      </List>
       <Typography variant={"body1"}>{notification.description}</Typography>
-      {
-        <Box
-          position={"absolute"}
-          right="10px"
-          bottom={"10px"}
-          width={"15px"}
-          height={"15px"}
-          borderRadius={"50%"}
-          backgroundColor={
-            !notification.log ? "white" : theme.palette.background.default
-          }
-          onClick={handleLog}
-        ></Box>
-      }
     </Box>
   );
 }
 
-export default NotificationCard;
+export default SentNotificationCard;
