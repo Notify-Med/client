@@ -8,7 +8,7 @@ import AuthContext from "../../../context/AuthProvider";
 import { useEffect, useState } from "react";
 import axios from "../../../api/axios.js";
 
-function NotificationScroll() {
+function NotificationScroll({ type }) {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(AuthContext);
@@ -26,7 +26,7 @@ function NotificationScroll() {
   // };
 
   const getNotifications = async () => {
-    const response = await axios.get("/notifications/new", {
+    const response = await axios.get(`/notifications/${type}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         "Content-Type": "application/json",

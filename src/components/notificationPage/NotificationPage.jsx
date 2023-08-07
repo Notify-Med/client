@@ -11,7 +11,7 @@ function NotificationPage() {
       alignItems="center"
     >
       <Box width={"50vw"} overflow="auto" height={"100%"}>
-        <NotificationScroll />
+        <NotificationScroll type="all" />
       </Box>
     </Box>
   );

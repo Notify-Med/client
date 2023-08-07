@@ -11,7 +11,6 @@ import axios from "../../api/axios.js";
 import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from "../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import io from "socket.io-client";
 import { createStyles } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Popper from "@mui/material/Popper";
@@ -64,8 +63,6 @@ const NotificationForm = ({ p }) => {
 
       // Update your app state or UI with the received notification
     });
-    setTitle("");
-    setDescription("");
   };
 
   // CUSTOM POPPER ------------------------------------------------------------

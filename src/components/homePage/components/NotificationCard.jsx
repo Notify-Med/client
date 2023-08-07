@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { makeStyles } from "@mui/styles";
 import { createStyles } from "@mui/material";
 import axios from "../../../api/axios";
+import AuthContext from "../../../context/AuthProvider";
 
 function NotificationCard({ notification }) {
   const theme = useTheme();
@@ -13,25 +14,39 @@ function NotificationCard({ notification }) {
   useContext(ColorModeContext);
   const [log, setLog] = useState(notification.log);
 
+  const { socket } = useContext(AuthContext);
+
+  // const handleLog = async () => {
+  //   if (!log) {
+  //     setLog(true);
+  //     const response = await axios.put(
+  //       `/notifications/${notification.id}`,
+  //       {
+  //         log: true,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     console.log("response:", response);
+  //   }
+  // };
+
   const handleLog = async () => {
     if (!log) {
       setLog(true);
-      const response = await axios.put(
-        `/notifications/${notification.id}`,
-        {
-          log: true,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      console.log("response:", response);
+      socket.emit("updateNotificationLog", {
+        receiverId: localStorage.getItem("id"),
+        notifId: notification.id,
+      });
+      socket.on("notificationLogUpdated", (notification) => {
+        console.log("Notification log updated:", notification);
+      });
+      setLog(false);
     }
-    setLog(false);
   };
 
   return (
@@ -70,7 +85,7 @@ function NotificationCard({ notification }) {
         {notification.sender}
       </Typography>
       <Typography variant={"body1"}>{notification.description}</Typography>
-      {!notification.log && (
+      {
         <Box
           position={"absolute"}
           right="10px"
@@ -78,10 +93,12 @@ function NotificationCard({ notification }) {
           width={"15px"}
           height={"15px"}
           borderRadius={"50%"}
-          backgroundColor={"white"}
+          backgroundColor={
+            !notification.log ? "white" : theme.palette.background.default
+          }
           onClick={handleLog}
         ></Box>
-      )}
+      }
     </Box>
   );
 }

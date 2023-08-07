@@ -27,7 +27,7 @@ function Homepage() {
         overflow="auto"
         height={"100%"}
       >
-        <NotificationScroll />
+        <NotificationScroll type="new" />
       </Box>
     </Box>
   );
