@@ -65,7 +65,7 @@ function NotificationCard({ notification }) {
           variant={"h"}
           sx={{ color: theme.palette.text.light, marginBottom: "10px" }}
         >
-          {notification.date}
+          At : {notification.date}
         </Typography>
         <Typography
           sx={{ color: theme.palette.text.light, marginBottom: "10px" }}
