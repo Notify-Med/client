@@ -53,15 +53,15 @@ function NotificationScroll({ type }) {
 
   return (
     <Box backgroundColor={theme.palette.background.popper} px={5} py={3}>
-      <NotificationCard
+      {/* <NotificationCard
         notification={{
           title: "Notification title",
           date: "2021-10-10",
-          sender: "Sender name",
+          senderName: "Sender name",
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet",
         }}
-      />
+      /> */}
       {notifications &&
       notifications.length > 0 &&
       Array.isArray(notifications) ? (

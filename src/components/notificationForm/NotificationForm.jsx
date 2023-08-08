@@ -59,8 +59,12 @@ const NotificationForm = ({ p }) => {
       id: localStorage.getItem("id"),
     });
     socket.on("notificationCreated", (notification) => {
-      console.log("Notification created:", notification);
+    console.log("Notification created:", notification);
 
+    setTitle("");
+    setDescription("");
+    setReceivers("");
+    
       // Update your app state or UI with the received notification
     });
   };

@@ -4,6 +4,7 @@ import { ColorModeContext, tokens } from "../../../theme";
 import { useTheme } from "@mui/material";
 import { useContext } from "react";
 import AuthContext from "../../../context/AuthProvider";
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 
 function NotificationCard({ notification }) {
   const theme = useTheme();
@@ -42,41 +43,45 @@ function NotificationCard({ notification }) {
       position={"relative"}
     >
       <Box
-        width={"100%"}
-        display={"flex"}
-        flexDirection={"row"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-        marginBottom={1}
-      >
-        <Typography variant={"h3"} sx={{ fontWeight: "600" }}>
-          {notification.title}
-        </Typography>
-        <Typography variant={"h6"} sx={{ color: theme.palette.text.light }}>
+      display={"flex"}
+      flexDirection={"row"}
+      justifyContent={"space-between"}
+      alignItems={"center"}
+      width="100%">
+      <Box>
+        <Box
+          width={"100%"}
+          display={"flex"}
+          flexDirection={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+          marginBottom={1}
+        >
+          <Typography variant={"h3"} sx={{ fontWeight: "600" }}>
+            {notification.title}
+          </Typography>
+        </Box>
+        <Typography
+          variant={"h"}
+          sx={{ color: theme.palette.text.light, marginBottom: "10px" }}
+        >
           {notification.date}
         </Typography>
+        <Typography
+          sx={{ color: theme.palette.text.light, marginBottom: "10px" }}
+        >
+          Sender : {notification.date}
+        </Typography>
+        <Typography variant={"body1"}>{notification.description}</Typography>
       </Box>
-      <Typography
-        variant={"h"}
-        sx={{ color: theme.palette.text.light, marginBottom: "10px" }}
-      >
-        {notification.sender}
-      </Typography>
-      <Typography variant={"body1"}>{notification.description}</Typography>
+      <Box display="flex"
+          alignItems="center"
+          justifyContent="flex-end">
       {
-        <Box
-          position={"absolute"}
-          right="10px"
-          bottom={"10px"}
-          width={"15px"}
-          height={"15px"}
-          borderRadius={"50%"}
-          backgroundColor={
-            !notification.log ? "white" : theme.palette.background.default
-          }
-          onClick={handleLog}
-        ></Box>
+        <RadioButtonUncheckedIcon onClick={handleLog}  />
       }
+      </Box>
+      </Box>
     </Box>
   );
 }

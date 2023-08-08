@@ -4,8 +4,7 @@ import Button from "@mui/material/Button";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsModeOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import PersonModeOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
@@ -45,7 +44,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const notifRoute = () => {
     navigate("/my-notifications");
   };
-
+  const homeRoute = () => {
+    navigate("/Home");
+  };
   const sentRoute = () => {
     navigate("/sent-notifications");
   };
@@ -91,9 +92,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             >
               <NotificationsModeOutlinedIcon />
             </IconButton>
-            {/* <IconButton onClick={notifRoute}>
-              <PersonModeOutlinedIcon />
-            </IconButton> */}
+            <IconButton onClick={homeRoute}>
+              <AddCircleOutlineIcon />
+            </IconButton>
             <Button
               variant="text"
               style={{ color: buttonTextcolor }}
