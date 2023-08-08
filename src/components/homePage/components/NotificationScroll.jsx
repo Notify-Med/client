@@ -12,9 +12,9 @@ function NotificationScroll({ type }) {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(AuthContext);
-  const { socket } = useContext(AuthContext);
+  const { socket, setNotifAlert } = useContext(AuthContext);
 
-  const [notifications, setNotification] = useState([]); // ["email1", "email2"]
+  const [notifications, setNotifications] = useState([]); // ["email1", "email2"]
 
   // const getNotifications = async (req, res) => {
   //   const response = await axios.get("/notifications", {
@@ -33,7 +33,15 @@ function NotificationScroll({ type }) {
       },
     });
     console.log(response);
-    setNotification(response.data);
+    if (response.data != notifications) {
+      console.log("New notification created");
+
+      setNotifications(response.data);
+      setNotifAlert(true);
+      setTimeout(() => {
+        setNotifAlert(false);
+      }, 3000);
+    }
   };
 
   useEffect(() => {
