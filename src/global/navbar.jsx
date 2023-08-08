@@ -21,7 +21,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     setIsLoggedIn(false);
-    navigate("/");
+    navigate("/login");
   };
 
   // Run the authentication check on component mount (page load)

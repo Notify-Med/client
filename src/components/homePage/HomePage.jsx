@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ColorModeContext, tokens } from "../../theme";
-import axios from "../../api/axios.js";
 import { useTheme } from "@mui/material";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthProvider";
