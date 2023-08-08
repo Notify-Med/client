@@ -3,30 +3,26 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import CheckIcon from "@mui/icons-material/Check";
 import Autocomplete from "@mui/material/Autocomplete";
-import tmpaLogo from "../../images/tmpaLogoOnly.png";
 import React from "react";
 import { ColorModeContext, tokens } from "../../theme";
 import { TextField, useTheme } from "@mui/material";
 import axios from "../../api/axios.js";
 import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from "../../context/AuthProvider";
-import { useNavigate } from "react-router-dom";
 import { createStyles } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Popper from "@mui/material/Popper";
-// import CustomPopper from "./components/CustomPopper.jsx";
 
 const NotificationForm = ({ p }) => {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
-  // console.log("mode :", theme.palette.mode);
 
   const { socket } = useContext(AuthContext);
 
   const titleRef = useRef();
 
-  const [usersEmails, setUsersEmails] = useState([]); // ["email1", "email2"]
+  const { usersEmails, setUsersEmails } = useContext(AuthContext); // ["email1", "email2"]
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [receivers, setReceivers] = useState([]);
@@ -69,20 +65,6 @@ const NotificationForm = ({ p }) => {
     });
   };
 
-  // CUSTOM POPPER ------------------------------------------------------------
-
-  // const useStyles = makeStyles((theme) =>
-  //   createStyles({
-  //     root: {
-  //       "& .MuiAutocomplete-listbox": {
-  //         border: `20px solid white`,
-  //         backgroundColor: theme.palette.background.primary,
-  //         color: theme.palette.text.light,
-  //       },
-  //     },
-  //   })
-  // );
-
   const useStyles = makeStyles((theme) =>
     createStyles({
       root: {
@@ -119,7 +101,6 @@ const NotificationForm = ({ p }) => {
       flexDirection="column"
       alignItems="center"
     >
-      <img src={tmpaLogo} alt="tmpa Logo" height={80} />
       <h2>Send Notification</h2>
       <form onSubmit={handleSubmit}>
         <TextField

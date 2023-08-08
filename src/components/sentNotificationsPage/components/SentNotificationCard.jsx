@@ -57,7 +57,7 @@ function SentNotificationCard({ notification }) {
             <ListItemIcon>
               {value.log ? <DoneAllOutlinedIcon /> : <CheckOutlinedIcon />}
             </ListItemIcon>
-            <ListItemText primary={`${value.name}`} />
+            <ListItemText primary={`${value.email}`} />
           </ListItem>
         ))}
       </List>

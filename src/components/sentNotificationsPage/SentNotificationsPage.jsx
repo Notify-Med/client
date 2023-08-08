@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import SentNotificationCard from "./components/SentNotificationCard";
-import { Box } from "@mui/material";
+import { Box, Autocomplete, TextField, Button, Popper } from "@mui/material";
+import { createStyles } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import { useContext } from "react";
@@ -12,8 +14,23 @@ function SentNotificationsPage() {
   tokens(theme.palette.mode);
   useContext(AuthContext);
   const { socket } = useContext(AuthContext);
+  const { usersEmails, setUsersEmails } = useContext(AuthContext);
 
-  const [sentNotifs, setSentNotifs] = React.useState([]);
+  const [sentNotifs, setSentNotifs] = useState([]);
+  const [shownSentNotifs, setShownSentNotifs] = useState([]);
+  const [receivers, setReceivers] = useState([]);
+
+  const getUsers = async () => {
+    const response = await axios.get("/users/all");
+    setUsersEmails(response.data);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getUsers();
+    };
+    fetchData();
+  }, []);
 
   const getSentNotifs = async () => {
     try {
@@ -24,6 +41,7 @@ function SentNotificationsPage() {
         },
       });
       setSentNotifs(res.data);
+      setShownSentNotifs(res.data);
       console.log(res.data);
     } catch (err) {
       console.log(err);
@@ -43,6 +61,63 @@ function SentNotificationsPage() {
     });
   }, []);
 
+  // START Auto Complete ----------------------------------------------------------
+
+  const getEmails = (receiverlistofobj) => {
+    let emails = [];
+    for (let i = 0; i < receiverlistofobj.length; i++) {
+      emails.push(receiverlistofobj[i].email);
+    }
+    return emails;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(receivers);
+    setShownSentNotifs([]);
+    for (let i = 0; i < receivers.length; i++) {
+      for (let j = 0; j < sentNotifs.length; j++) {
+        const emails = getEmails(sentNotifs[j].receivers);
+        if (emails.includes(receivers[i])) {
+          setShownSentNotifs((prev) => [...prev, sentNotifs[j]]);
+        }
+      }
+    }
+  };
+
+  const handleReset = (e) => {
+    e.preventDefault();
+    setShownSentNotifs(sentNotifs);
+  };
+
+  const useStyles = makeStyles((theme) =>
+    createStyles({
+      root: {
+        "& .MuiAutocomplete-listbox": {
+          backgroundColor: theme.palette.background.popper,
+          "& li": {
+            color: theme.palette.mode === "dark" ? "white" : undefined,
+          },
+        },
+      },
+    })
+  );
+
+  function CustomPopper(props) {
+    const classes = useStyles(props.theme);
+
+    return (
+      <Popper
+        {...props}
+        className={classes.root}
+        placement="bottom"
+        elevation={5}
+      />
+    );
+  }
+
+  // END Auto Complete ------------------------------------------------------------
+
   return (
     <Box
       display={"flex"}
@@ -52,6 +127,76 @@ function SentNotificationsPage() {
       alignItems="center"
     >
       <Box width={"50vw"} overflow="auto" height={"100%"}>
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          p={5}
+          flexDirection="column"
+          alignItems="center"
+        >
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: "flex", width: "100%" }}
+          >
+            <Autocomplete
+              style={{
+                width: "100%",
+                marginTop: "30px",
+              }}
+              PopperComponent={CustomPopper}
+              multiple
+              id="tags-outlined"
+              options={usersEmails}
+              filterSelectedOptions
+              onChange={(event, value) => {
+                setReceivers(value);
+                console.log("value", value);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  label="Receivers"
+                  placeholder="Receivers"
+                />
+              )}
+            />
+
+            <Box
+              display={"flex"}
+              justifyContent={"center"}
+              p={5}
+              flexDirection="column"
+              alignItems="center"
+            >
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{}}
+                className="submitB"
+              >
+                {" "}
+                Submit
+              </Button>
+            </Box>
+            <Box
+              display={"flex"}
+              justifyContent={"center"}
+              p={5}
+              alignItems="center"
+            >
+              <Button
+                type="button"
+                variant="contained"
+                sx={{ width: "50px" }}
+                className="submitB"
+                onClick={handleReset}
+              >
+                Show all
+              </Button>
+            </Box>
+          </form>
+        </Box>
         <Box backgroundColor={theme.palette.background.popper} px={5} py={3}>
           <SentNotificationCard
             notification={{
@@ -66,8 +211,10 @@ function SentNotificationsPage() {
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet",
             }}
           />
-          {sentNotifs && sentNotifs.length > 0 && Array.isArray(sentNotifs) ? (
-            sentNotifs.map((notification, index) => (
+          {shownSentNotifs &&
+          shownSentNotifs.length > 0 &&
+          Array.isArray(shownSentNotifs) ? (
+            shownSentNotifs.map((notification, index) => (
               <SentNotificationCard notification={notification} key={index} />
             ))
           ) : (
