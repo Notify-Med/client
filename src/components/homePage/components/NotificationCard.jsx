@@ -31,15 +31,12 @@ function NotificationCard({ notification }) {
 
   return (
     <Box
-      p={2}
-      mt={2}
-      mb={2}
+      
       width={"100%"}
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
       alignItems={"flex-start"}
-      backgroundColor={theme.palette.background.default}
       borderRadius={5}
       position={"relative"}
     >
