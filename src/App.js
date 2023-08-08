@@ -4,24 +4,28 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./global/navbar";
 import Login from "./components/login/login";
 import Register from "./components/register/register";
-// import Notification from "./components/notification";
+import HomePage from "./components/homePage/HomePage";
+import NotificationForm from "./components/notificationForm/NotificationForm";
+import { useState } from "react";
 // import Profile from "./components/profile";
-
 
 function App() {
   const [theme, colorMode] = useMode();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <CssBaseline/>
+        <CssBaseline />
         <div className="app">
           <main className="content">
-            <Navbar />
+            <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
             <Routes>
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
               <Route path="/register" element={<Register />} />
-              {/* <Route path="/notification" element={<Notification />} /> */}
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/form" element={<NotificationForm />} />
               {/* <Route path="/profile" element={<Profile />} /> */}
             </Routes>
           </main>
