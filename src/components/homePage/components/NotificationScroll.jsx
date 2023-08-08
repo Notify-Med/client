@@ -8,7 +8,7 @@ import AuthContext from "../../../context/AuthProvider";
 import { useEffect, useState } from "react";
 import axios from "../../../api/axios.js";
 
-function NotificationScroll() {
+function NotificationScroll({ type }) {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(AuthContext);
@@ -26,7 +26,7 @@ function NotificationScroll() {
   // };
 
   const getNotifications = async () => {
-    const response = await axios.get("/notifications", {
+    const response = await axios.get(`/notifications/${type}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         "Content-Type": "application/json",
@@ -45,7 +45,7 @@ function NotificationScroll() {
 
   useEffect(() => {
     // Event listener for "newNotificationCreated" event
-    socket.on("newNotificationCreated", () => {
+    socket.on("update", () => {
       console.log("New notification created");
       getNotifications(); // Fetch the latest notifications
     });
@@ -53,15 +53,15 @@ function NotificationScroll() {
 
   return (
     <Box backgroundColor={theme.palette.background.popper} px={5} py={3}>
-      <NotificationCard
+      {/* <NotificationCard
         notification={{
           title: "Notification title",
           date: "2021-10-10",
-          sender: "Sender name",
+          senderName: "Sender name",
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet",
         }}
-      />
+      /> */}
       {notifications &&
       notifications.length > 0 &&
       Array.isArray(notifications) ? (

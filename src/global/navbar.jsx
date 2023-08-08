@@ -4,7 +4,8 @@ import Button from "@mui/material/Button";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsModeOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import PersonModeOutlinedIcon from "@mui/icons-material/PersonOutlined";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import AuthContext from "../context/AuthProvider";
@@ -20,8 +21,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   // Function to handle logout
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("id");
     setIsLoggedIn(false);
-    navigate("/login");
+    navigate("/login  ");
   };
 
   // Run the authentication check on component mount (page load)
@@ -37,6 +39,16 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   // Navigate to the '/register' route
   const LoginRoute = () => {
     navigate("/login");
+  };
+
+  const notifRoute = () => {
+    navigate("/my-notifications");
+  };
+  const homeRoute = () => {
+    navigate("/Home");
+  };
+  const sentRoute = () => {
+    navigate("/sent-notifications");
   };
 
   const theme = useTheme();
@@ -66,6 +78,12 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
         {isLoggedIn ? (
           // Render these elements when the user is logged in
           <>
+            <IconButton onClick={sentRoute}>
+              <SendOutlinedIcon />
+            </IconButton>
+            <IconButton onClick={notifRoute}>
+              <MailOutlineOutlinedIcon />
+            </IconButton>
             <IconButton
               onClick={() => {
                 setNotifShown(!notifShown);
@@ -74,8 +92,8 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             >
               <NotificationsModeOutlinedIcon />
             </IconButton>
-            <IconButton>
-              <PersonModeOutlinedIcon />
+            <IconButton onClick={homeRoute}>
+              <AddCircleOutlineIcon />
             </IconButton>
             <Button
               variant="text"
