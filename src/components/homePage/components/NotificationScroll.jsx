@@ -9,22 +9,36 @@ import axios from "../../../api/axios.js";
 function NotificationScroll({ type }) {
   const theme = useTheme();
   tokens(theme.palette.mode);
-  
-  const { socket } = useContext(AuthContext);
-  const [notifications, setNotifications] = useState([]);
+  useContext(AuthContext);
+  const { socket, setNotifAlert } = useContext(AuthContext);
+
+  const [notifications, setNotifications] = useState([]); // ["email1", "email2"]
+
+  // const getNotifications = async (req, res) => {
+  //   const response = await axios.get("/notifications", {
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //     },
+  //   });
+  //   console.log(response.data);
+  // };
 
   const getNotifications = async () => {
-    try {
-      const response = await axios.get(`/notifications/${type}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          "Content-Type": "application/json",
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching notifications:", error);
-      return [];
+    const response = await axios.get(`/notifications/${type}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(response);
+    if (response.data != notifications) {
+      console.log("New notification created");
+
+      setNotifications(response.data);
+      setNotifAlert(true);
+      setTimeout(() => {
+        setNotifAlert(false);
+      }, 3000);
     }
   };
 

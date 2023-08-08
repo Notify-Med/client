@@ -3,6 +3,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Navbar from "./global/navbar";
+import AlertNewNotif from "./global/AlertNewNotif";
 import Login from "./components/login/login";
 import Register from "./components/register/register";
 import HomePage from "./components/homePage/HomePage";
@@ -41,6 +42,7 @@ function App() {
                 element={<SentNotificationPage />}
               />
             </Routes>
+            <AlertNewNotif />
           </main>
         </div>
       </ThemeProvider>

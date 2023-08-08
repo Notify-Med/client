@@ -21,6 +21,7 @@ const NotificationForm = ({ p }) => {
   const { socket } = useContext(AuthContext);
 
   const titleRef = useRef();
+  const autoCompleteRef = useRef();
 
   const { usersEmails, setUsersEmails } = useContext(AuthContext); // ["email1", "email2"]
   const [title, setTitle] = useState("");
@@ -55,12 +56,11 @@ const NotificationForm = ({ p }) => {
       id: localStorage.getItem("id"),
     });
     socket.on("notificationCreated", (notification) => {
-    console.log("Notification created:", notification);
+      console.log("Notification created:", notification);
 
-    setTitle("");
-    setDescription("");
-    setReceivers("");
-    
+      setTitle("");
+      setDescription("");
+
       // Update your app state or UI with the received notification
     });
   };
@@ -179,6 +179,7 @@ const NotificationForm = ({ p }) => {
           id="tags-outlined"
           options={usersEmails}
           filterSelectedOptions
+          ref={autoCompleteRef}
           onChange={(event, value) => {
             setReceivers(value);
             console.log("value", value);
