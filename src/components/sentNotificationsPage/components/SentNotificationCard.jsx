@@ -1,10 +1,17 @@
-import { Box, Typography, List, ListItem, ListItemText } from "@mui/material";
+import {
+  Box,
+  Typography,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import React, { useState } from "react";
 import { ColorModeContext, tokens } from "../../../theme";
 import { useTheme } from "@mui/material";
 import { useContext } from "react";
-import AuthContext from "../../../context/AuthProvider";
-import axios from "../../../api/axios";
+import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
+import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined";
 
 function SentNotificationCard({ notification }) {
   const theme = useTheme();
@@ -17,7 +24,7 @@ function SentNotificationCard({ notification }) {
       p={2}
       mt={2}
       mb={2}
-      width={"50%"}
+      width={"100%"}
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
@@ -42,16 +49,14 @@ function SentNotificationCard({ notification }) {
         </Typography>
       </Box>
       <Typography variant={"h"} sx={{ color: theme.palette.text.light }}>
-        {notification.sender}
+        to:
       </Typography>
-      <List sx={{ width: "100%", maxWidth: 360 }}>
+      <List sx={{ width: "100%" }}>
         {notification.receivers.map((value, index) => (
-          <ListItem
-            sx={{ padding: "0" }}
-            key={index}
-            disableGutters
-            secondaryAction={<Typography> {`${value.log}`} </Typography>}
-          >
+          <ListItem disablePadding key={index}>
+            <ListItemIcon>
+              {value.log ? <DoneAllOutlinedIcon /> : <CheckOutlinedIcon />}
+            </ListItemIcon>
             <ListItemText primary={`${value.name}`} />
           </ListItem>
         ))}
