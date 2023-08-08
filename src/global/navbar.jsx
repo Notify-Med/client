@@ -1,4 +1,5 @@
 import { Box, IconButton, useTheme } from "@mui/material";
+import Badge from '@mui/material/Badge';
 import { ColorModeContext, tokens } from "../theme";
 import Button from "@mui/material/Button";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -94,7 +95,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
                 console.log(notifShown);
               }}
             >
+              <Badge badgeContent={4} color="secondary">
               <NotificationsModeOutlinedIcon />
+              </Badge>
             </IconButton>
             <IconButton onClick={homeRoute}>
               <AddCircleOutlineIcon />
