@@ -14,6 +14,8 @@ import * as React from 'react';
 import NotificationScroll from "../components/homePage/components/NotificationScroll";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
+
 
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
@@ -114,10 +116,15 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
           // Render these elements when the user is logged in
           <>
             <IconButton onClick={sentRoute}>
+            <Tooltip title="Sent Notifications" arrow>
               <SendOutlinedIcon />
+            </Tooltip>
+              
             </IconButton>
             <IconButton onClick={notifRoute}>
-              <MailOutlineOutlinedIcon />
+              <Tooltip title="Received Notifications" arrow>
+                <MailOutlineOutlinedIcon />
+              </Tooltip>
             </IconButton>
             <IconButton
               onClick={() => {
@@ -143,6 +150,8 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
       overflow: 'visible',
       filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
       mt: 1.5,
+      maxHeight: '400px', // Set the maximum height
+      overflowY: 'auto', // Enable vertical scrolling
      
       '&:before': {
         content: '""',

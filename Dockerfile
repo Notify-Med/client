@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as the base image
-FROM node:19.9.0-alpine
+FROM node:18
 
 # Set the working directory inside the container
 WORKDIR /client
@@ -12,9 +12,6 @@ RUN npm install --force
 
 # Copy the rest of the app code to the working directory
 COPY . .
-
-# Build the React app
-RUN npm run build
 
 # Expose the port your app will run on
 EXPOSE 3000

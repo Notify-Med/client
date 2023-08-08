@@ -188,7 +188,7 @@ function SentNotificationsPage() {
               <Button
                 type="button"
                 variant="contained"
-                sx={{ width: "50px" }}
+                // sx={{ width: "50px" }}
                 className="submitB"
                 onClick={handleReset}
               >
