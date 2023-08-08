@@ -1,15 +1,31 @@
-import { Box, TextField, Typography } from "@mui/material";
-import React from "react";
+import { Box, Typography } from "@mui/material";
+import React, { useState } from "react";
 import { ColorModeContext, tokens } from "../../../theme";
 import { useTheme } from "@mui/material";
 import { useContext } from "react";
-import { makeStyles } from "@mui/styles";
-import { createStyles } from "@mui/material";
+import AuthContext from "../../../context/AuthProvider";
 
 function NotificationCard({ notification }) {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
+  const [log, setLog] = useState(notification.log);
+
+  const { socket } = useContext(AuthContext);
+
+  const handleLog = async () => {
+    if (!log) {
+      setLog(true);
+      socket.emit("updateNotificationLog", {
+        receiverId: localStorage.getItem("id"),
+        notifId: notification.id,
+      });
+      socket.on("notificationLogUpdated", (notification) => {
+        console.log("Notification log updated:", notification);
+      });
+      setLog(false);
+    }
+  };
 
   return (
     <Box
@@ -23,6 +39,7 @@ function NotificationCard({ notification }) {
       alignItems={"flex-start"}
       backgroundColor={theme.palette.background.default}
       borderRadius={5}
+      position={"relative"}
     >
       <Box
         width={"100%"}
@@ -46,6 +63,20 @@ function NotificationCard({ notification }) {
         {notification.sender}
       </Typography>
       <Typography variant={"body1"}>{notification.description}</Typography>
+      {
+        <Box
+          position={"absolute"}
+          right="10px"
+          bottom={"10px"}
+          width={"15px"}
+          height={"15px"}
+          borderRadius={"50%"}
+          backgroundColor={
+            !notification.log ? "white" : theme.palette.background.default
+          }
+          onClick={handleLog}
+        ></Box>
+      }
     </Box>
   );
 }

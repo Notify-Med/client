@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 const LOGIN_URL = "/users/login";
 
 const Login = ({ isLoggedIn, setIsLoggedIn }) => {
-
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
@@ -59,7 +58,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
       console.log("accessToken:", accessToken); // Add this line to check the value
       localStorage.setItem("accessToken", response?.data?.token);
       console.log("id: ", response?.data?._id);
-
+      localStorage.setItem("id", response?.data?._id);
 
       setAuth({ email, pwd, accessToken });
       setEmail("");
@@ -159,19 +158,25 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
           }}
         />
 
-
-
-          <Box display={'flex'} justifyContent={'center'} p={5} flexDirection="column" alignItems="center">
-            <Button type="submit" variant="contained" sx={{}} className='submitB'> Submit</Button>
-          </Box>
-        </form>
-        {errMsg && <Alert severity="error">
-                      {errMsg}
-                    </Alert>}
-        {success && <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-                      User logged in successfully.
-                    </Alert>}
-
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          p={5}
+          flexDirection="column"
+          alignItems="center"
+        >
+          <Button type="submit" variant="contained" sx={{}} className="submitB">
+            {" "}
+            Submit
+          </Button>
+        </Box>
+      </form>
+      {errMsg && <Alert severity="error">{errMsg}</Alert>}
+      {success && (
+        <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+          User logged in successfully.
+        </Alert>
+      )}
     </Box>
   );
 };
