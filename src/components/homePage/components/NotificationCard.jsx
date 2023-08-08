@@ -72,7 +72,7 @@ function NotificationCard({ notification }) {
           <Typography
             sx={{ color: theme.palette.text.light, marginBottom: "10px" }}
           >
-            Sender : {notification.date}
+            Sender : {notification.sender}
           </Typography>
           <Typography variant={"body1"}>{notification.description}</Typography>
         </Box>
