@@ -51,6 +51,10 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
     navigate("/sent-notifications");
   };
 
+  const HomeRoute = () => {
+    navigate("/home");
+  };
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
@@ -64,7 +68,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <Box display="flex" justifyContent="space-between" p={2} height={"100px"}>
-      <h2>NotifyMed</h2>
+      <h2 onClick={HomeRoute}>NotifyMed</h2>
 
       <Box display="flex" alignItems="center">
         <IconButton onClick={colorMode.toggleColorMode}>
