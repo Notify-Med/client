@@ -14,6 +14,7 @@ import * as React from 'react';
 import NotificationScroll from "../components/homePage/components/NotificationScroll";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
 
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
@@ -114,11 +115,17 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
           // Render these elements when the user is logged in
           <>
             <IconButton onClick={sentRoute}>
-              <SendOutlinedIcon />
+              <Tooltip title="Sent Notifications" arrow>
+                <SendOutlinedIcon />
+              </Tooltip>
             </IconButton>
+
             <IconButton onClick={notifRoute}>
-              <MailOutlineOutlinedIcon />
+              <Tooltip title="Received Notifications" arrow>
+                <MailOutlineOutlinedIcon />              
+              </Tooltip>
             </IconButton>
+            
             <IconButton
               onClick={() => {
                 setNotifShown(!notifShown);
