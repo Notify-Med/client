@@ -148,6 +148,7 @@ export const themeSettings = (mode) => {
             // Add focused state styles for dark mode
             text: {
               light: colors.primary[200],
+              dark: colors.primary[500]
             },
           }
         : {
@@ -164,6 +165,7 @@ export const themeSettings = (mode) => {
             },
             background: {
               default: "#fcfcfc",
+              popper: "#edf2f4",
             },
             action: {
               focus: colors.primary[500],
