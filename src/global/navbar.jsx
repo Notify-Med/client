@@ -17,7 +17,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 
 
-
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const { notifShown, setNotifShown } = useContext(AuthContext);
   // Function to check if the user is authenticated using localStorage
@@ -116,16 +115,17 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
           // Render these elements when the user is logged in
           <>
             <IconButton onClick={sentRoute}>
-            <Tooltip title="Sent Notifications" arrow>
-              <SendOutlinedIcon />
-            </Tooltip>
-              
-            </IconButton>
-            <IconButton onClick={notifRoute}>
-              <Tooltip title="Received Notifications" arrow>
-                <MailOutlineOutlinedIcon />
+              <Tooltip title="Sent Notifications" arrow>
+                <SendOutlinedIcon />
               </Tooltip>
             </IconButton>
+
+            <IconButton onClick={notifRoute}>
+              <Tooltip title="Received Notifications" arrow>
+                <MailOutlineOutlinedIcon />              
+              </Tooltip>
+            </IconButton>
+            
             <IconButton
               onClick={() => {
                 setNotifShown(!notifShown);

@@ -45,7 +45,12 @@ function NotificationScroll({ type }) {
   useEffect(() => {
     const fetchData = async () => {
       const notificationsData = await getNotifications();
-      setNotifications(notificationsData);
+      if (Array.isArray(notificationsData)){
+        setNotifications(notificationsData);
+      }else{
+        setNotifications([]);
+      }
+      console.log("Received notificationsData:", notificationsData);
     };
     fetchData();
   }, [type]); // Fetch when the "type" prop changes
