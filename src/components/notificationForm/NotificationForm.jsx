@@ -61,7 +61,6 @@ const NotificationForm = ({ p }) => {
     setDescription("");
     setReceivers("");
     
-      // Update your app state or UI with the received notification
     });
   };
 
@@ -97,11 +96,11 @@ const NotificationForm = ({ p }) => {
     <Box
       display={"flex"}
       justifyContent={"center"}
-      p={5 + p}
+    m={5}
       flexDirection="column"
       alignItems="center"
     >
-      <h2>Send Notification</h2>
+      <h1>Send A Notification</h1>
       <form onSubmit={handleSubmit}>
         <TextField
           id="title"
@@ -200,10 +199,22 @@ const NotificationForm = ({ p }) => {
           flexDirection="column"
           alignItems="center"
         >
-          <Button type="submit" variant="contained" sx={{}} className="submitB">
-            {" "}
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              backgroundColor: theme.palette.secondary.main,
+              color: theme.palette.primary.main,
+              "&:hover": {
+                backgroundColor: theme.palette.secondary.main, 
+                color: theme.palette.grey[100],
+              },
+            }}
+            className="submitB"
+          >
             Submit
           </Button>
+
         </Box>
       </form>
       {errMsg && <Alert severity="error">{errMsg}</Alert>}

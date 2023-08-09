@@ -6,6 +6,7 @@ import { useContext } from "react";
 import AuthContext from "../../../context/AuthProvider";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+import Tooltip from '@mui/material/Tooltip';
 
 function NotificationCard({ notification }) {
   const theme = useTheme();
@@ -76,12 +77,15 @@ function NotificationCard({ notification }) {
         <Box display="flex" alignItems="center" justifyContent="flex-end">
           {/* {<RadioButtonUncheckedIcon onClick={handleLog} />} */}
           {!notification.log ? (
-            <RadioButtonUncheckedIcon
-              sx={{ color: "white" }}
-              onClick={handleLog}
-            />
+            <Tooltip title="Check as seen" arrow>
+              <RadioButtonUncheckedIcon
+                sx={{ cursor: "pointer"}}
+                onClick={handleLog}
+            
+              />
+            </Tooltip>
           ) : (
-            <RadioButtonCheckedIcon sx={{ color: "white" }} />
+            <RadioButtonCheckedIcon/>
           )}
         </Box>
       </Box>

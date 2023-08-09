@@ -87,7 +87,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   }, []);
 
 
-  // NOTIFICATION DIALOG ================
+  // NOTIFICATION MENU ================
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -150,7 +150,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
       overflow: 'visible',
       filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
       mt: 1.5,
-     
+      width: '30%',
+      maxHeight: '400px', // Set the maximum height
+      overflowY: 'auto', // Enable vertical scrolling
       '&:before': {
         content: '""',
         display: 'block',
