@@ -10,10 +10,25 @@ import axios from "../../api/axios.js";
 import { useRef, useState, useEffect, useContext } from "react";
 import AuthContext from "../../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import InputAdornment from '@mui/material/InputAdornment';
+
+
 
 const LOGIN_URL = "/users/login";
 
 const Login = ({ isLoggedIn, setIsLoggedIn }) => {
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
@@ -31,12 +46,15 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
+ 
+
   useEffect(() => {
     userRef.current.focus();
   }, []);
   useEffect(() => {
     setErrMsg("");
   }, [email, pwd]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault(); //disable the default behavior of the form which will reload the page
@@ -125,7 +143,7 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
             marginTop: "30px",
           }}
         />
-        <TextField
+        {/* <TextField
           id="password"
           label="Password"
           variant="standard"
@@ -156,8 +174,54 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
             width: "100%",
             marginTop: "30px",
           }}
-        />
+        /> */}
 
+        <TextField
+          id="password"
+          type={showPassword ? 'text' : 'password'}
+          label="Password"
+          variant="standard"
+          onChange={(e) => setPwd(e.target.value)}
+          value={pwd}
+          required
+          sx={{
+            "& label.Mui-focused": {
+              color:
+                theme.palette.mode === "dark"
+                  ? theme.palette.text.light
+                  : undefined,
+            },
+            "& .MuiInput-underline:after": {
+              borderBottomColor:
+                theme.palette.mode === "dark"
+                  ? theme.palette.text.light
+                  : undefined,
+            },
+            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+              {
+                borderColor:
+                  theme.palette.mode === "dark"
+                    ? theme.palette.text.light
+                    : undefined,
+              },
+            width: "100%",
+            marginTop: "30px",
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+        />
+      
         <Box
           display={"flex"}
           justifyContent={"center"}

@@ -9,6 +9,10 @@ import { TextField, useTheme } from "@mui/material";
 import { useState } from "react";
 import axios from "../../api/axios.js";
 import "./register.css";
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import InputAdornment from '@mui/material/InputAdornment';
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -16,6 +20,15 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = "/users";
 
 const Register = () => {
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
@@ -144,7 +157,7 @@ const Register = () => {
             marginTop: "30px",
           }}
         />
-        <TextField
+        {/* <TextField
           id="password"
           label="Password"
           variant="standard"
@@ -174,6 +187,52 @@ const Register = () => {
               },
             width: "100%",
             marginTop: "30px",
+          }}
+        /> */}
+
+<TextField
+          id="password"
+          type={showPassword ? 'text' : 'password'}
+          label="Password"
+          variant="standard"
+          onChange={(e) => setPwd(e.target.value)}
+          value={pwd}
+          required
+          sx={{
+            "& label.Mui-focused": {
+              color:
+                theme.palette.mode === "dark"
+                  ? theme.palette.text.light
+                  : undefined,
+            },
+            "& .MuiInput-underline:after": {
+              borderBottomColor:
+                theme.palette.mode === "dark"
+                  ? theme.palette.text.light
+                  : undefined,
+            },
+            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+              {
+                borderColor:
+                  theme.palette.mode === "dark"
+                    ? theme.palette.text.light
+                    : undefined,
+              },
+            width: "100%",
+            marginTop: "30px",
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            )
           }}
         />
 
