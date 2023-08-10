@@ -60,7 +60,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   };
 
   const HomeRoute = () => {
-    navigate("/home");
+    navigate("/");
   };
 
   const theme = useTheme();
