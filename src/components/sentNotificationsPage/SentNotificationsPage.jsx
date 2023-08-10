@@ -1,6 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import SentNotificationCard from "./components/SentNotificationCard";
-import { Box, Autocomplete, TextField, Button, Popper, Divider } from "@mui/material";
+import {
+  Box,
+  Autocomplete,
+  TextField,
+  Button,
+  Popper,
+  Divider,
+} from "@mui/material";
 import { createStyles } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useTheme } from "@mui/material";
@@ -118,37 +125,54 @@ function SentNotificationsPage() {
 
   // END Auto Complete ------------------------------------------------------------
 
-
   return (
     <Box
       display={"flex"}
       justifyContent={"center"}
-      p={5}
+      p={{ xs: 2, md: 5 }}
       flexDirection="column"
       alignItems="center"
-    > <h1>Sent Notifications</h1>
-      <Box width={"70%"} overflow="auto" height={"100%"}style={{ border: ".5px solid ", borderRadius: "10px", padding: "10px", borderColor:"#adb5bd" }}>
+    >
+      {" "}
+      <h1>Sent Notifications</h1>
+      <Box
+        width={{ xs: "100%", md: "70%" }}
+        overflow="auto"
+        height={"100%"}
+        style={{
+          border: ".5px solid ",
+          borderRadius: "10px",
+          padding: "10px",
+          borderColor: "#adb5bd",
+        }}
+      >
         <Box
           display={"flex"}
           justifyContent={"center"}
           p={1}
-          flexDirection="column"
+          flexDirection={"column"}
           alignItems="center"
-          
         >
-          
-         
           <form
             onSubmit={handleSubmit}
-            style={{ display: "flex", width: "100%" }}
+            style={{
+              display: "flex",
+              width: "100%",
+              flexWrap: "wrap",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
           >
-            <label style={{ width: "100%", marginTop:"50px", marginLeft:"50px"}}>filter by email :</label>
+            <label
+              style={{ width: "100%", marginTop: "50px", marginLeft: "50px" }}
+            >
+              filter by email :
+            </label>
 
             <Autocomplete
               style={{
                 width: "100%",
-                marginTop: "30px",
-          
+                maxWidth: "500px",
               }}
               PopperComponent={CustomPopper}
               multiple
@@ -160,7 +184,6 @@ function SentNotificationsPage() {
                 console.log("value", value);
               }}
               renderInput={(params) => (
-                
                 <TextField
                   {...params}
                   variant="standard"
@@ -178,7 +201,6 @@ function SentNotificationsPage() {
               flexDirection="column"
               alignItems="center"
             >
-              
               <Button
                 type="submit"
                 variant="contained"
@@ -186,14 +208,14 @@ function SentNotificationsPage() {
                   backgroundColor: theme.palette.secondary.main,
                   color: theme.palette.primary.main,
                   "&:hover": {
-                    backgroundColor: theme.palette.secondary.hover, 
+                    backgroundColor: theme.palette.secondary.hover,
                     color: theme.palette.primary.main,
                   },
                 }}
                 className="submitB"
               >
                 {" "}
-                Submit
+                Filter
               </Button>
             </Box>
             <Box
@@ -206,27 +228,24 @@ function SentNotificationsPage() {
                 type="button"
                 variant="contained"
                 sx={{
-                  width: "100px", 
+                  width: "100px",
                   backgroundColor: theme.palette.secondary.main,
                   color: theme.palette.primary.main,
                   "&:hover": {
-                    backgroundColor: theme.palette.secondary.hover, 
+                    backgroundColor: theme.palette.secondary.hover,
                     color: theme.palette.primary.main,
                   },
                 }}
                 className="submitB"
                 onClick={handleReset}
-              
               >
                 Show all
               </Button>
-              
             </Box>
-           
           </form>
         </Box>
-        <Box px={5} py={3}>
-        <Divider style={{ marginBottom:"50px" }} />
+        <Box px={{ xs: 2, md: 5 }} py={{ xs: 1.5, md: 3 }}>
+          <Divider style={{ marginBottom: "50px" }} />
           {/* <SentNotificationCard
             notification={{
               title: "Notification title",

@@ -165,18 +165,21 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
           flexDirection="column"
           alignItems="center"
         >
-          <Button type="submit" variant="contained" 
-          sx={{ 
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
               backgroundColor: "#1f89e6",
               color: "white",
               "&:hover": {
-                backgroundColor: "#00a6fb", 
-                color:"white",
+                backgroundColor: "#00a6fb",
+                color: "white",
               },
               width: "100%",
-              marginTop: "30px"
-            }}>
-            Submit
+              marginTop: "30px",
+            }}
+          >
+            Log In
           </Button>
         </Box>
       </form>
