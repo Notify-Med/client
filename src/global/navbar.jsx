@@ -122,12 +122,14 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
     fetchData();
   }, []);
 
-  socket.on("update", () => {
-    console.log(hasNewNotifications);
-    checkNewNotifications().then((newNotificationsExist) => {
-      setHasNewNotifications(newNotificationsExist);
+  useEffect(() => {
+    socket.on("update", () => {
+      console.log(hasNewNotifications);
+      checkNewNotifications().then((newNotificationsExist) => {
+        setHasNewNotifications(newNotificationsExist);
+      });
     });
-  });
+  }, []);
 
   return (
     <Box display="flex" justifyContent="space-between" p={2} height={"100px"}>
