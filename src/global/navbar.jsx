@@ -214,10 +214,10 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  marginLeft: "125px",
                 }}
               >
                 <MenuItem
+                  sx={{ width: "auto", margin: "0 auto" }}
                   onClick={(event) => {
                     // Prevent event propagation to Menu
                     event.stopPropagation();
