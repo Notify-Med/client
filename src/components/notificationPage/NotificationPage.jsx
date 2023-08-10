@@ -1,4 +1,4 @@
-import { Box, Card } from "@mui/material";
+import { Box } from "@mui/material";
 import NotificationScroll from "../homePage/components/NotificationScroll";
 
 function NotificationPage() {
