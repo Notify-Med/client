@@ -77,7 +77,7 @@ function NotificationCard({ notification }) {
         <Box display="flex" alignItems="center" justifyContent="flex-end">
           {/* {<RadioButtonUncheckedIcon onClick={handleLog} />} */}
           {!notification.log ? (
-            <Tooltip title="Check as seen" arrow>
+            <Tooltip title="Mark as read" arrow>
               <RadioButtonUncheckedIcon
                 sx={{ cursor: "pointer"}}
                 onClick={handleLog}
