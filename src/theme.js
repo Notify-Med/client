@@ -134,7 +134,8 @@ export const themeSettings = (mode) => {
               main: colors.primary[500],
             },
             secondary: {
-              main: colors.greenAccent[500],
+              main: "#48cae4",
+              hover: "#59cce3"
             },
             neutral: {
               dark: colors.grey[500],
@@ -156,7 +157,11 @@ export const themeSettings = (mode) => {
               main: colors.primary[100],
             },
             secondary: {
-              main: colors.greenAccent[500],
+              main: "#1f89e6",
+              hover: "#00a6fb"
+            },
+            alert:{
+              main: colors.redAccent[500],
             },
             neutral: {
               dark: colors.grey[700],

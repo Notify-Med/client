@@ -9,7 +9,7 @@ import axios from "../../../api/axios.js";
 function NotificationScroll({ type }) {
   const theme = useTheme();
   tokens(theme.palette.mode);
-  
+
   const { socket } = useContext(AuthContext);
   const [notifications, setNotifications] = useState([]);
 
@@ -31,39 +31,41 @@ function NotificationScroll({ type }) {
   useEffect(() => {
     const fetchData = async () => {
       const notificationsData = await getNotifications();
-      if (Array.isArray(notificationsData)){
+      if (Array.isArray(notificationsData)) {
         setNotifications(notificationsData);
-      }else{
+      } else {
         setNotifications([]);
       }
       console.log("Received notificationsData:", notificationsData);
     };
     fetchData();
-  }, [type]); // Fetch when the "type" prop changes
+  }, []); // Fetch when the "type" prop changes
 
   useEffect(() => {
     // Event listener for "newNotificationCreated" event
     socket.on("update", () => {
       console.log("New notification created");
-      getNotifications().then(notificationsData => {
+      getNotifications().then((notificationsData) => {
         setNotifications(notificationsData);
       });
     });
-    
+
     // Clean up the socket listener when component unmounts
     return () => {
       socket.off("update");
     };
-  }, [socket]);
+  }, []);
 
   return (
     <Box px={5} py={3}>
-      {notifications && notifications.length > 0 ? (
+      {notifications &&
+      notifications.length > 0 &&
+      Array.isArray(notifications) ? (
         notifications.map((notification, index) => (
           <div key={index}>
             <NotificationCard notification={notification} />
             {index < notifications.length - 1 && (
-              <Divider style={{ margin: '20px 0' }} />
+              <Divider style={{ margin: "20px 0" }} />
             )}
           </div>
         ))

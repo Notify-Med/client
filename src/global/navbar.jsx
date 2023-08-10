@@ -1,24 +1,25 @@
 import { Box, IconButton, useTheme } from "@mui/material";
-import Badge from '@mui/material/Badge';
+import Badge from "@mui/material/Badge";
 import { ColorModeContext, tokens } from "../theme";
 import Button from "@mui/material/Button";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsModeOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
 import AuthContext from "../context/AuthProvider";
-import * as React from 'react';
+import * as React from "react";
 import NotificationScroll from "../components/homePage/components/NotificationScroll";
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Tooltip from '@mui/material/Tooltip';
-
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Tooltip from "@mui/material/Tooltip";
+import axios from "../api/axios.js";
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
-  const { notifShown, setNotifShown } = useContext(AuthContext);
+  const { notifShown, setNotifShown, socket } = useContext(AuthContext);
   // Function to check if the user is authenticated using localStorage
   const isUserAuthenticated = () => {
     const authToken = localStorage.getItem("accessToken");
@@ -59,7 +60,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   };
 
   const HomeRoute = () => {
-    navigate("/home");
+    navigate("/");
   };
 
   const theme = useTheme();
@@ -77,7 +78,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const [hasNewNotifications, setHasNewNotifications] = useState(false);
 
   const checkForNewNotifications = () => {
-    const newNotificationsExist = true  // MISSING THE LOGIC !!!!!
+    const newNotificationsExist = true; // MISSING THE LOGIC !!!!!
     setHasNewNotifications(newNotificationsExist);
   };
 
@@ -85,7 +86,6 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   useEffect(() => {
     checkForNewNotifications();
   }, []);
-
 
   // NOTIFICATION MENU ================
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -97,10 +97,43 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
     setAnchorEl(null);
   };
 
+  // badge for new notifications
+  const checkNewNotifications = async () => {
+    try {
+      const response = await axios.get(`/notifications/new`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const data = response.data;
+      return data.length > 0 && Array.isArray(data);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const newNotificationsExist = await checkNewNotifications();
+      setHasNewNotifications(newNotificationsExist);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    socket.on("update", () => {
+      console.log(hasNewNotifications);
+      checkNewNotifications().then((newNotificationsExist) => {
+        setHasNewNotifications(newNotificationsExist);
+      });
+    });
+  }, []);
 
   return (
     <Box display="flex" justifyContent="space-between" p={2} height={"100px"}>
-      <h2 onClick={HomeRoute}>NotifyMed</h2>
+      <h2 onClick={HomeRoute} style={{cursor:"pointer"}}>NotifyMed</h2>
 
       <Box display="flex" alignItems="center">
         <IconButton onClick={colorMode.toggleColorMode}>
@@ -122,65 +155,79 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
 
             <IconButton onClick={notifRoute}>
               <Tooltip title="Received Notifications" arrow>
-                <MailOutlineOutlinedIcon />              
+                <MailOutlineOutlinedIcon />
               </Tooltip>
             </IconButton>
-            
+
             <IconButton
               onClick={() => {
                 setNotifShown(!notifShown);
               }}
             >
-              <Badge variant="dot" color="secondary" overlap="circular" 
-                      invisible={!hasNewNotifications}
-              >
-                <NotificationsModeOutlinedIcon onClick={handleClick}/>
-              </Badge>
+              {hasNewNotifications ? (
+                <Badge
+                  variant="dot"
+                  color="secondary"
+                  overlap="circular"
+                  invisible={!hasNewNotifications}
+                >
+                  <NotificationsModeOutlinedIcon onClick={handleClick} />
+                </Badge>
+              ) : (
+                <NotificationsModeOutlinedIcon onClick={handleClick} />
+              )}
             </IconButton>
 
-
-<Menu
-  anchorEl={anchorEl}
-  id="account-menu"
-  open={open}
-  onClose={handleClose}
-  PaperProps={{
-    elevation: 0,
-    sx: {
-      overflow: 'visible',
-      filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-      mt: 1.5,
-      width: '30%',
-      maxHeight: '400px', // Set the maximum height
-      overflowY: 'auto', // Enable vertical scrolling
-      '&:before': {
-        content: '""',
-        display: 'block',
-        position: 'absolute',
-        top: 0,
-        right: 10,
-        width: 10,
-        height: 10,
-        bgcolor: 'background.paper',
-        transform: 'translateY(-50%) rotate(45deg)',
-        zIndex: 0,
-      },
-    },
-  }}
-  transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-  anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }} 
->
-  <NotificationScroll type="new" />
-  <div style={{ display: 'flex', alignItems: 'center', marginLeft: '125px' }}>
-    <MenuItem onClick={(event) => {
-      // Prevent event propagation to Menu
-      event.stopPropagation();
-      handleClose();
-    }}>
-      Close
-    </MenuItem>
-  </div>
-</Menu>
+            <Menu
+              anchorEl={anchorEl}
+              id="account-menu"
+              open={open}
+              onClose={handleClose}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  mt: 1.5,
+                  width: "30%",
+                  maxHeight: "400px", // Set the maximum height
+                  overflowY: "auto", // Enable vertical scrolling
+                  "&:before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    right: 10,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0,
+                  },
+                },
+              }}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+              <NotificationScroll type="new" />
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <MenuItem
+                  sx={{ width: "auto", margin: "0 auto" }}
+                  onClick={(event) => {
+                    // Prevent event propagation to Menu
+                    event.stopPropagation();
+                    handleClose();
+                  }}
+                >
+                  Close
+                </MenuItem>
+              </div>
+            </Menu>
             <IconButton onClick={homeRoute}>
               <AddCircleOutlineIcon />
             </IconButton>

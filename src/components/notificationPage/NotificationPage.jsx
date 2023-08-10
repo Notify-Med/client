@@ -1,4 +1,4 @@
-import { Box, Card } from "@mui/material";
+import { Box } from "@mui/material";
 import NotificationScroll from "../homePage/components/NotificationScroll";
 
 function NotificationPage() {
@@ -12,8 +12,8 @@ function NotificationPage() {
       alignItems="center"
     >
       <h1>Received Notifications</h1>
-      <Box width={"50vw"} overflow="auto" height={"100%"}
-      style={{ border: "1px solid ", borderRadius: "10px", padding: "10px" }}>
+      <Box width={"60%"} overflow="auto" height={"100%"}
+      style={{ border: "1px solid ", borderRadius: "10px", padding: "10px" , borderColor:"#adb5bd"}}>
 
         <NotificationScroll type="all" />
       </Box>
