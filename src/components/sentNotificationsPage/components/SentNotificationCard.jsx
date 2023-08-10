@@ -6,7 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { ColorModeContext, tokens } from "../../../theme";
 import { useTheme } from "@mui/material";
 import { useContext } from "react";
@@ -17,7 +17,12 @@ function SentNotificationCard({ notification }) {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
-  const [sentNotifs, setSentNotifs] = useState([]);
+  
+  function formatDateTime(inputDateTime) {
+    const dateObject = new Date(inputDateTime);
+    const formattedDate = `${dateObject.toLocaleDateString()}, ${dateObject.toLocaleTimeString()}`;
+    return formattedDate;
+  }
 
   return (
     <Box
@@ -29,7 +34,7 @@ function SentNotificationCard({ notification }) {
       flexDirection={"column"}
       justifyContent={"center"}
       alignItems={"flex-start"}
-      backgroundColor={theme.palette.background.default}
+      backgroundColor={theme.palette.background.popper}
       borderRadius={5}
       position={"relative"}
     >
@@ -45,22 +50,69 @@ function SentNotificationCard({ notification }) {
           {notification.title}
         </Typography>
         <Typography variant={"h6"} sx={{ color: theme.palette.text.light }}>
-          {notification.date}
+          {formatDateTime(notification.date)}
         </Typography>
       </Box>
       <Typography variant={"h"} sx={{ color: theme.palette.text.light }}>
         to:
       </Typography>
       <List sx={{ width: "100%" }}>
-        {notification.receivers.map((value, index) => (
-          <ListItem disablePadding key={index}>
-            <ListItemIcon>
-              {value.log ? <DoneAllOutlinedIcon /> : <CheckOutlinedIcon />}
-            </ListItemIcon>
+  {notification.receivers.reduce(
+    (acc, value) => {
+      if (value.log) {
+        acc.seen.push(value.email);
+      } else {
+        acc.unseen.push(value.email);
+      }
+      return acc;
+    },
+    { seen: [], unseen: [] }
+  ).unseen.length > 0 && (
+    <div>
+      <ListItem disablePadding>
+        <ListItemIcon>
+          <CheckOutlinedIcon />
+        </ListItemIcon>
+        <ListItemText primary={`Unseen:`} />
+      </ListItem>
+      {notification.receivers.map((value, index) => (
+        !value.log && (
+          <ListItem key={index}>
             <ListItemText primary={`${value.email}`} />
           </ListItem>
-        ))}
-      </List>
+        )
+      ))}
+    </div>
+  )}
+  {notification.receivers.reduce(
+    (acc, value) => {
+      if (value.log) {
+        acc.seen.push(value.email);
+      } else {
+        acc.unseen.push(value.email);
+      }
+      return acc;
+    },
+    { seen: [], unseen: [] }
+  ).seen.length > 0 && (
+    <div>
+      <ListItem disablePadding>
+        <ListItemIcon>
+          <DoneAllOutlinedIcon />
+        </ListItemIcon>
+        <ListItemText primary={`Seen:`} />
+      </ListItem>
+      {notification.receivers.map((value, index) => (
+        value.log && (
+          <ListItem key={index}>
+            <ListItemText primary={`${value.email}`} />
+          </ListItem>
+        )
+      ))}
+    </div>
+  )}
+</List>
+
       <Typography variant={"body1"}>{notification.description}</Typography>
     </Box>
   );

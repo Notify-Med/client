@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import SentNotificationCard from "./components/SentNotificationCard";
-import { Box, Autocomplete, TextField, Button, Popper } from "@mui/material";
+import { Box, Autocomplete, TextField, Button, Popper, Divider } from "@mui/material";
 import { createStyles } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useTheme } from "@mui/material";
@@ -118,6 +118,7 @@ function SentNotificationsPage() {
 
   // END Auto Complete ------------------------------------------------------------
 
+
   return (
     <Box
       display={"flex"}
@@ -125,23 +126,29 @@ function SentNotificationsPage() {
       p={5}
       flexDirection="column"
       alignItems="center"
-    >
-      <Box width={"50vw"} overflow="auto" height={"100%"}>
+    > <h1>Sent Notifications</h1>
+      <Box width={"70%"} overflow="auto" height={"100%"}style={{ border: ".5px solid ", borderRadius: "10px", padding: "10px", borderColor:"#adb5bd" }}>
         <Box
           display={"flex"}
           justifyContent={"center"}
-          p={5}
+          p={1}
           flexDirection="column"
           alignItems="center"
+          
         >
+          
+         
           <form
             onSubmit={handleSubmit}
             style={{ display: "flex", width: "100%" }}
           >
+            <label style={{ width: "100%", marginTop:"50px", marginLeft:"50px"}}>filter by email :</label>
+
             <Autocomplete
               style={{
                 width: "100%",
                 marginTop: "30px",
+          
               }}
               PopperComponent={CustomPopper}
               multiple
@@ -153,10 +160,12 @@ function SentNotificationsPage() {
                 console.log("value", value);
               }}
               renderInput={(params) => (
+                
                 <TextField
                   {...params}
                   variant="standard"
                   label="Receivers"
+                  id="emails"
                   placeholder="Receivers"
                 />
               )}
@@ -169,10 +178,12 @@ function SentNotificationsPage() {
               flexDirection="column"
               alignItems="center"
             >
+              
               <Button
                 type="submit"
                 variant="contained"
-                sx={{}}
+                sx={{ backgroundColor: theme.palette.secondary.main, color: theme.palette.text.dark,
+                 }}
                 className="submitB"
               >
                 {" "}
@@ -188,17 +199,21 @@ function SentNotificationsPage() {
               <Button
                 type="button"
                 variant="contained"
-                sx={{ width: "50px" }}
+                sx={{ width: "100px", backgroundColor: theme.palette.secondary.main, color: theme.palette.text.dark }}
                 className="submitB"
                 onClick={handleReset}
+              
               >
                 Show all
               </Button>
+              
             </Box>
+           
           </form>
         </Box>
-        <Box backgroundColor={theme.palette.background.popper} px={5} py={3}>
-          <SentNotificationCard
+        <Box px={5} py={3}>
+        <Divider style={{ marginBottom:"50px" }} />
+          {/* <SentNotificationCard
             notification={{
               title: "Notification title",
               date: "2021-10-10",
@@ -210,7 +225,7 @@ function SentNotificationsPage() {
               description:
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet",
             }}
-          />
+          /> */}
           {shownSentNotifs &&
           shownSentNotifs.length > 0 &&
           Array.isArray(shownSentNotifs) ? (
