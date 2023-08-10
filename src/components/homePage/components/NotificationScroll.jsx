@@ -9,38 +9,32 @@ import axios from "../../../api/axios.js";
 function NotificationScroll({ type }) {
   const theme = useTheme();
   tokens(theme.palette.mode);
-  useContext(AuthContext);
+  
   const { socket } = useContext(AuthContext);
-
-  const [notifications, setNotification] = useState([]); // ["email1", "email2"]
-
-  // const getNotifications = async (req, res) => {
-  //   const response = await axios.get("/notifications", {
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //     },
-  //   });
-  //   console.log(response.data);
-  // };
+  const [notifications, setNotifications] = useState([]);
 
   const getNotifications = async () => {
-    const response = await axios.get(`/notifications/${type}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        "Content-Type": "application/json",
-      },
-    });
-    console.log(response);
-    setNotification(response.data);
+    try {
+      const response = await axios.get(`/notifications/${type}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+      return [];
+    }
   };
 
   useEffect(() => {
     const fetchData = async () => {
       const notificationsData = await getNotifications();
       if (Array.isArray(notificationsData)){
-        setNotification(notificationsData);
+        setNotifications(notificationsData);
       }else{
-        setNotification([]);
+        setNotifications([]);
       }
       console.log("Received notificationsData:", notificationsData);
     };
@@ -52,7 +46,7 @@ function NotificationScroll({ type }) {
     socket.on("update", () => {
       console.log("New notification created");
       getNotifications().then(notificationsData => {
-        setNotification(notificationsData);
+        setNotifications(notificationsData);
       });
     });
     
