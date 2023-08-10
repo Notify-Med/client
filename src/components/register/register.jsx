@@ -184,19 +184,21 @@ const Register = () => {
           flexDirection="column"
           alignItems="center"
         >
-          <Button type="submit" variant="contained" 
-            sx={{ 
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
               backgroundColor: "rgb(31, 137, 230)",
               color: "white",
               "&:hover": {
-                backgroundColor: "#00a6fb", 
-                color:"white",
+                backgroundColor: "#00a6fb",
+                color: "white",
               },
               width: "100%",
-              marginTop: "30px"
-            }}>
-            
-            Submit
+              marginTop: "30px",
+            }}
+          >
+            Register
           </Button>
         </Box>
       </form>

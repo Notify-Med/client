@@ -57,7 +57,7 @@ function NotificationScroll({ type }) {
   }, []);
 
   return (
-    <Box px={5} py={3}>
+    <Box px={{ xs: 2, md: 5 }} py={3}>
       {notifications &&
       notifications.length > 0 &&
       Array.isArray(notifications) ? (

@@ -55,10 +55,10 @@ const NotificationForm = ({ p }) => {
       id: localStorage.getItem("id"),
     });
     socket.on("notificationCreated", (notification) => {
-    console.log("Notification created:", notification);
+      console.log("Notification created:", notification);
 
-    setTitle("");
-    setDescription("");
+      setTitle("");
+      setDescription("");
     });
   };
 
@@ -94,7 +94,7 @@ const NotificationForm = ({ p }) => {
     <Box
       display={"flex"}
       justifyContent={"center"}
-    m={5}
+      m={5}
       flexDirection="column"
       alignItems="center"
     >
@@ -200,19 +200,18 @@ const NotificationForm = ({ p }) => {
           <Button
             type="submit"
             variant="contained"
-            sx={{ 
+            sx={{
               backgroundColor: theme.palette.secondary.main,
               color: theme.palette.primary.main,
               "&:hover": {
-                backgroundColor: theme.palette.secondary.hover, 
+                backgroundColor: theme.palette.secondary.hover,
                 color: theme.palette.primary.main,
               },
             }}
             className="submitB"
           >
-            Submit
+            Send Notification
           </Button>
-
         </Box>
       </form>
       {errMsg && <Alert severity="error">{errMsg}</Alert>}
