@@ -200,12 +200,12 @@ const NotificationForm = ({ p }) => {
           <Button
             type="submit"
             variant="contained"
-            sx={{
+            sx={{ 
               backgroundColor: theme.palette.secondary.main,
               color: theme.palette.primary.main,
               "&:hover": {
-                backgroundColor: theme.palette.secondary.main, 
-                color: theme.palette.grey[100],
+                backgroundColor: theme.palette.secondary.hover, 
+                color: theme.palette.primary.main,
               },
             }}
             className="submitB"

@@ -182,8 +182,14 @@ function SentNotificationsPage() {
               <Button
                 type="submit"
                 variant="contained"
-                sx={{ backgroundColor: theme.palette.secondary.main, color: theme.palette.text.dark,
-                 }}
+                sx={{
+                  backgroundColor: theme.palette.secondary.main,
+                  color: theme.palette.primary.main,
+                  "&:hover": {
+                    backgroundColor: theme.palette.secondary.hover, 
+                    color: theme.palette.primary.main,
+                  },
+                }}
                 className="submitB"
               >
                 {" "}
@@ -199,7 +205,15 @@ function SentNotificationsPage() {
               <Button
                 type="button"
                 variant="contained"
-                sx={{ width: "100px", backgroundColor: theme.palette.secondary.main, color: theme.palette.text.dark }}
+                sx={{
+                  width: "100px", 
+                  backgroundColor: theme.palette.secondary.main,
+                  color: theme.palette.primary.main,
+                  "&:hover": {
+                    backgroundColor: theme.palette.secondary.hover, 
+                    color: theme.palette.primary.main,
+                  },
+                }}
                 className="submitB"
                 onClick={handleReset}
               

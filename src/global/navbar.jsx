@@ -133,7 +133,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
 
   return (
     <Box display="flex" justifyContent="space-between" p={2} height={"100px"}>
-      <h2 onClick={HomeRoute}>NotifyMed</h2>
+      <h2 onClick={HomeRoute} style={{cursor:"pointer"}}>NotifyMed</h2>
 
       <Box display="flex" alignItems="center">
         <IconButton onClick={colorMode.toggleColorMode}>

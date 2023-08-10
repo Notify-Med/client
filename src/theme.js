@@ -135,6 +135,7 @@ export const themeSettings = (mode) => {
             },
             secondary: {
               main: colors.greenAccent[500],
+              hover: colors.greenAccent[400]
             },
             neutral: {
               dark: colors.grey[500],
@@ -157,6 +158,10 @@ export const themeSettings = (mode) => {
             },
             secondary: {
               main: colors.greenAccent[500],
+              hover: colors.greenAccent[600]
+            },
+            alert:{
+              main: colors.redAccent[500],
             },
             neutral: {
               dark: colors.grey[700],
