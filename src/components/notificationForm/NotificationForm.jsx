@@ -59,8 +59,6 @@ const NotificationForm = ({ p }) => {
 
     setTitle("");
     setDescription("");
-    setReceivers("");
-    
     });
   };
 
