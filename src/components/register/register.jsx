@@ -13,6 +13,8 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputAdornment from '@mui/material/InputAdornment';
+import { useNavigate } from "react-router-dom";
+
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -20,7 +22,9 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = "/users";
 
 const Register = () => {
+  const navigate = useNavigate(); 
 
+  const [submitted, setSubmitted] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -32,7 +36,6 @@ const Register = () => {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
-  console.log("mode :", theme.palette.mode);
 
   //submiting data logic with axios:
 
@@ -66,12 +69,13 @@ const Register = () => {
         }
       );
 
-      console.log(response.data);
       setSuccess(true);
       setUser("");
       setEmail("");
       setPwd("");
       setErrMsg("");
+
+      navigate("/login");
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
@@ -93,7 +97,11 @@ const Register = () => {
     >
       <img src={tmpaLogo} alt="tmpa Logo" height={80} />
       <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => {
+      e.preventDefault();
+      setSubmitted(true); // Mark the form as submitted
+      handleSubmit(e);
+    }}>
         <TextField
           sx={{
             "& label.Mui-focused": {
@@ -118,8 +126,10 @@ const Register = () => {
             width: "100%",
             marginTop: "25px",
           }}
+          error={submitted && !USER_REGEX.test(user)} // Apply error after form submission and invalid input
+          helperText={submitted && !USER_REGEX.test(user) ? "Enter a valid username (4 characters)" : "Enter a username"}
           id="name"
-          label="Full Name"
+          label="Username"
           variant="standard"
           value={user}
           onChange={(e) => setUser(e.target.value)}
@@ -133,6 +143,8 @@ const Register = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          error={submitted && !EMAIL_REGEX.test(email)} // Apply error after form submission and invalid input
+          helperText={submitted && !EMAIL_REGEX.test(email) ? "Enter a valid email address" : "Enter an email address"}
           sx={{
             "& label.Mui-focused": {
               color:
@@ -157,40 +169,8 @@ const Register = () => {
             marginTop: "30px",
           }}
         />
-        {/* <TextField
-          id="password"
-          label="Password"
-          variant="standard"
-          type="password"
-          value={pwd}
-          onChange={(e) => setPwd(e.target.value)}
-          required
-          sx={{
-            "& label.Mui-focused": {
-              color:
-                theme.palette.mode === "dark"
-                  ? theme.palette.text.light
-                  : undefined,
-            },
-            "& .MuiInput-underline:after": {
-              borderBottomColor:
-                theme.palette.mode === "dark"
-                  ? theme.palette.text.light
-                  : undefined,
-            },
-            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-              {
-                borderColor:
-                  theme.palette.mode === "dark"
-                    ? theme.palette.text.light
-                    : undefined,
-              },
-            width: "100%",
-            marginTop: "30px",
-          }}
-        /> */}
 
-<TextField
+        <TextField
           id="password"
           type={showPassword ? 'text' : 'password'}
           label="Password"
@@ -198,6 +178,8 @@ const Register = () => {
           onChange={(e) => setPwd(e.target.value)}
           value={pwd}
           required
+          error={submitted && !PWD_REGEX.test(pwd)} // Apply error after form submission and invalid input
+          helperText={submitted && !PWD_REGEX.test(pwd) ? "Enter a strong password (8-24 characters) with at least one lowercase letter, one uppercase letter, one digit, and one special character" : "Enter a strong password (8-24 characters) with at least one lowercase letter, one uppercase letter, one digit, and one special character"}
           sx={{
             "& label.Mui-focused": {
               color:

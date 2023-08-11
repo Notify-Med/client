@@ -32,7 +32,6 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
-  // console.log("mode :", theme.palette.mode);
 
   const { setAuth } = useContext(AuthContext);
 
@@ -68,21 +67,23 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
           withCredentials: true,
         }
       );
-      console.log(JSON.stringify(response?.data));
-      const accessToken = response?.data?.token;
 
-      // Store the token in a cookie (using js-cookie)
 
-      console.log("accessToken:", accessToken); // Add this line to check the value
-      localStorage.setItem("accessToken", response?.data?.token);
-      console.log("id: ", response?.data?._id);
-      localStorage.setItem("id", response?.data?._id);
-
-      setAuth({ email, pwd, accessToken });
-      setEmail("");
-      setPwd("");
-      setSuccess(true);
-      setIsLoggedIn(true);
+      // Store the token in localStorage (using js-cookie)
+      if (response?.data?.token) {
+        localStorage.setItem("accessToken", response.data.token);
+        localStorage.setItem("id", response.data._id);
+  
+        setAuth({ email, pwd, accessToken: response.data.token });
+        setEmail("");
+        setPwd("");
+        setSuccess(true);
+        setIsLoggedIn(true);
+        navigate("/Home");
+      } else {
+        setErrMsg("Login Failed");
+      }
+      
       //HomeRef.current.click();
       navigate("/Home");
     } catch (err) {
@@ -95,7 +96,9 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
       } else {
         setErrMsg("Login Failed");
       }
-      errRef.current.focus();
+      if (errRef.current) { // Check if errRef.current is defined
+        errRef.current.focus();
+      }
     }
   };
 
