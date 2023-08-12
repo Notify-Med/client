@@ -9,6 +9,7 @@ import HomePage from "./components/homePage/HomePage";
 import NotificationForm from "./components/notificationForm/NotificationForm";
 import NotificationPage from "./components/notificationPage/NotificationPage";
 import SentNotificationPage from "./components/sentNotificationsPage/SentNotificationsPage";
+import NotificationCardPage from "./components/notificationCardPage/NotificationCardPage";
 // import Profile from "./components/profile";
 
 function App() {
@@ -36,6 +37,10 @@ function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/form" element={<NotificationForm />} />
               <Route path="/my-notifications" element={<NotificationPage />} />
+              <Route
+                path="/my-notifications/:id"
+                element={<NotificationCardPage />}
+              />
               <Route
                 path="/sent-notifications"
                 element={<SentNotificationPage />}
