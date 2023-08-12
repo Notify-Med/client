@@ -14,6 +14,10 @@ function NotificationCard({ notification }) {
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
   const [log, setLog] = useState(notification.log);
+  const [description, setDescription] = useState(
+    notification.description.slice(0, 50)
+  );
+  const [seen, setSeen] = useState(notification.log);
 
   const navigate = useNavigate();
 
@@ -23,6 +27,13 @@ function NotificationCard({ notification }) {
     console.log("Notification: ", notification);
     setNotif(notification);
     navigate("/my-notifications/" + notification.id);
+  };
+
+  const handledescription = () => {
+    seen
+      ? setDescription(notification.description.slice(0, 50))
+      : setDescription(notification.description);
+    setSeen(!seen);
   };
 
   const handleLog = async () => {
@@ -56,7 +67,7 @@ function NotificationCard({ notification }) {
         alignItems={"center"}
         width="100%"
       >
-        <Box onClick={handleNavigate}>
+        <Box>
           <Box
             width={"100%"}
             display={"flex"}
@@ -80,16 +91,30 @@ function NotificationCard({ notification }) {
           >
             Sender : {notification.sender}
           </Typography>
-          {notification.description.length > 50 ? (
+          {description.length <= 50 && notification.description.length > 50 ? (
             <Typography variant={"body1"} sx={{ wordBreak: "break-word" }}>
-              {notification.description.slice(0, 50)}
-              <span style={{ color: theme.palette.text.light }}>
+              {description}
+              <span
+                style={{ color: theme.palette.text.light, cursor: "pointer" }}
+                onClick={handledescription}
+              >
+                {" "}
                 ... See more
               </span>
             </Typography>
+          ) : notification.description.length <= 50 ? (
+            <Typography variant={"body1"} sx={{ wordBreak: "break-word" }}>
+              {description}
+            </Typography>
           ) : (
             <Typography variant={"body1"} sx={{ wordBreak: "break-word" }}>
-              {notification.description}
+              {description}
+              <span
+                style={{ color: theme.palette.text.light, cursor: "pointer" }}
+                onClick={handledescription}
+              >
+                {"    "}... See less
+              </span>
             </Typography>
           )}
         </Box>
