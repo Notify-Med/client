@@ -16,43 +16,298 @@
                 align-items: center;
                 text-align: center;
                 justify-content: center;
+                font-family: 'Poppins', sans-serif;
             }
-        
-            .circle {
-                animation: move571 4s linear infinite;
+            .h1{
+                margin-bottom: 20px !important;
+                color: #DBE3F4;
+                margin-bottom: 100px !important;
+            }
+            .boxes {
+                margin-left: 150px !important;
+                --size: 32px;
+                --duration: 800ms;
+                height: calc(var(--size) * 2);
+                width: calc(var(--size) * 3);
+                position: relative;
+                transform-style: preserve-3d;
+                transform-origin: 50% 50%;
+                margin-top: calc(var(--size) * 1.5 * -1);
+                transform: rotateX(60deg) rotateZ(45deg) rotateY(0deg) translateZ(0px);
               }
               
-              .circle.right {
-                animation-direction: reverse;
+              .boxes .box {
+                width: var(--size);
+                height: var(--size);
+                top: 0;
+                left: 0;
+                position: absolute;
+                transform-style: preserve-3d;
               }
               
-              @keyframes move571 {
-                25% {
-                  transform: translateX(-32px);
+              .boxes .box:nth-child(1) {
+                transform: translate(100%, 0);
+                -webkit-animation: box1 var(--duration) linear infinite;
+                animation: box1 var(--duration) linear infinite;
+              }
+              
+              .boxes .box:nth-child(2) {
+                transform: translate(0, 100%);
+                -webkit-animation: box2 var(--duration) linear infinite;
+                animation: box2 var(--duration) linear infinite;
+              }
+              
+              .boxes .box:nth-child(3) {
+                transform: translate(100%, 100%);
+                -webkit-animation: box3 var(--duration) linear infinite;
+                animation: box3 var(--duration) linear infinite;
+              }
+              
+              .boxes .box:nth-child(4) {
+                transform: translate(200%, 0);
+                -webkit-animation: box4 var(--duration) linear infinite;
+                animation: box4 var(--duration) linear infinite;
+              }
+              
+              .boxes .box > div {
+                --background: #5C8DF6;
+                --top: auto;
+                --right: auto;
+                --bottom: auto;
+                --left: auto;
+                --translateZ: calc(var(--size) / 2);
+                --rotateY: 0deg;
+                --rotateX: 0deg;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: var(--background);
+                top: var(--top);
+                right: var(--right);
+                bottom: var(--bottom);
+                left: var(--left);
+                transform: rotateY(var(--rotateY)) rotateX(var(--rotateX)) translateZ(var(--translateZ));
+              }
+              
+              .boxes .box > div:nth-child(1) {
+                --top: 0;
+                --left: 0;
+              }
+              
+              .boxes .box > div:nth-child(2) {
+                --background: #145af2;
+                --right: 0;
+                --rotateY: 90deg;
+              }
+              
+              .boxes .box > div:nth-child(3) {
+                --background: #447cf5;
+                --rotateX: -90deg;
+              }
+              
+              .boxes .box > div:nth-child(4) {
+                --background: #DBE3F4;
+                --top: 0;
+                --left: 0;
+                --translateZ: calc(var(--size) * 3 * -1);
+              }
+              
+              @-webkit-keyframes box1 {
+                0%, 50% {
+                  transform: translate(100%, 0);
                 }
               
-                75% {
-                  transform: translateX(32px);
+                100% {
+                  transform: translate(200%, 0);
+                }
+              }
+              
+              @keyframes box1 {
+                0%, 50% {
+                  transform: translate(100%, 0);
+                }
+              
+                100% {
+                  transform: translate(200%, 0);
+                }
+              }
+              
+              @-webkit-keyframes box2 {
+                0% {
+                  transform: translate(0, 100%);
+                }
+              
+                50% {
+                  transform: translate(0, 0);
+                }
+              
+                100% {
+                  transform: translate(100%, 0);
+                }
+              }
+              
+              @keyframes box2 {
+                0% {
+                  transform: translate(0, 100%);
+                }
+              
+                50% {
+                  transform: translate(0, 0);
+                }
+              
+                100% {
+                  transform: translate(100%, 0);
+                }
+              }
+              
+              @-webkit-keyframes box3 {
+                0%, 50% {
+                  transform: translate(100%, 100%);
+                }
+              
+                100% {
+                  transform: translate(0, 100%);
+                }
+              }
+              
+              @keyframes box3 {
+                0%, 50% {
+                  transform: translate(100%, 100%);
+                }
+              
+                100% {
+                  transform: translate(0, 100%);
+                }
+              }
+              
+              @-webkit-keyframes box4 {
+                0% {
+                  transform: translate(200%, 0);
+                }
+              
+                50% {
+                  transform: translate(200%, 100%);
+                }
+              
+                100% {
+                  transform: translate(100%, 100%);
+                }
+              }
+              
+              @keyframes box4 {
+                0% {
+                  transform: translate(200%, 0);
+                }
+              
+                50% {
+                  transform: translate(200%, 100%);
+                }
+              
+                100% {
+                  transform: translate(100%, 100%);
+                }
+              }
+             
+                @media (max-width: 768px) { 
+                    .h1 {
+                        font-size: 18px; 
+                    }
+                    .boxes{
+                        margin-right:150px !important;
+                    }
+                    .button{
+                        margin-right: 100px;
+                    }
+                }
+              .button {
+                cursor: pointer;
+                margin-top: 150px;
+                margin-left: 150px ;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 6px 12px;
+                gap: 8px;
+                height: 34px;
+                width: 112px;
+                border: none;
+                background: #5C8DF6;
+                border-radius: 20px;
+                cursor: pointer;
+              }
+            
+              .lable {
+                line-height: 20px;
+                font-size: 17px;
+                color: #DBE3F4;
+                font-family: sans-serif;
+                letter-spacing: 1px;
+              }
+              
+              .button:hover {
+                background: #759df3;
+              }
+              
+              .button:hover .svg-icon {
+                animation: spin 2s linear infinite;
+              }
+              
+              @keyframes spin {
+                0% {
+                  transform: rotate(0deg);
+                }
+              
+                100% {
+                  transform: rotate(-360deg);
                 }
               }
         </style>
     </head>
     <body>
-        <svg height="0" width="0">
-            <defs>
-                <filter color-interpolation-filters="sRGB" height="200%" y="-50%" width="200%" x="-50%" id="goo">
-                    <feGaussianBlur result="blur" stdDeviation="8" in="SourceGraphic"></feGaussianBlur>
-                    <feColorMatrix result="cm" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -7" mode="matrix" in="blur"></feColorMatrix>
-                </filter>
-            </defs>
-        </svg>
-        
-        <svg height="180" width="320" viewBox="0 0 320 180">
-            <g filter="url(#goo)">
-                <circle cy="90" cx="160" r="24" fill="#275EFE" class="circle"></circle>
-                <circle cy="90" cx="160" r="24" fill="#275EFE" class="circle right"></circle>
-            </g>
-        </svg>
+        <div class="container">
+            <div>
+                <h1 class="h1">looks like you are offline</h1>
+            </div>
+            <div class="boxes">
+                <div class="box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div>
+                <button class="button"  id="refreshButton">
+                    <svg class="svg-icon" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><g stroke="#DBE3F4" stroke-linecap="round" stroke-width="1.5"><path d="m3.33337 10.8333c0 3.6819 2.98477 6.6667 6.66663 6.6667 3.682 0 6.6667-2.9848 6.6667-6.6667 0-3.68188-2.9847-6.66664-6.6667-6.66664-1.29938 0-2.51191.37174-3.5371 1.01468"></path><path d="m7.69867 1.58163-1.44987 3.28435c-.18587.42104.00478.91303.42582 1.0989l3.28438 1.44986"></path></g></svg>
+                    <span class="lable">refresh</span>
+                  </button>
+            </div>
+        </div>
+        <script>
+            // Add event listener to the refresh button
+            document.getElementById("refreshButton").addEventListener("click", function() {
+                // Reload the page
+                location.reload();
+            });
+        </script>
     </body>
 </html>
  

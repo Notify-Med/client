@@ -125,7 +125,6 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
 
   useEffect(() => {
     socket.on("update", () => {
-      console.log(hasNewNotifications);
       checkNewNotifications().then((newNotificationsExist) => {
         setHasNewNotifications(newNotificationsExist);
       });
