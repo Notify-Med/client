@@ -15,9 +15,9 @@ function NotificationCard({ notification }) {
   useContext(ColorModeContext);
   const [log, setLog] = useState(notification.log);
   const [description, setDescription] = useState(
-    notification.description.slice(0, 50)
+    notification.description.slice(0, 150)
   );
-  const [seen, setSeen] = useState(notification.log);
+  const [seen, setSeen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ function NotificationCard({ notification }) {
 
   const handledescription = () => {
     seen
-      ? setDescription(notification.description.slice(0, 50))
+      ? setDescription(notification.description.slice(0, 150))
       : setDescription(notification.description);
     setSeen(!seen);
   };
@@ -91,7 +91,7 @@ function NotificationCard({ notification }) {
           >
             Sender : {notification.sender}
           </Typography>
-          {description.length <= 50 && notification.description.length > 50 ? (
+          {description.length <= 150 && notification.description.length > 150 ? (
             <Typography variant={"body1"} sx={{ wordBreak: "break-word" }}>
               {description}
               <span
@@ -102,7 +102,7 @@ function NotificationCard({ notification }) {
                 ... See more
               </span>
             </Typography>
-          ) : notification.description.length <= 50 ? (
+          ) : notification.description.length <= 150 ? (
             <Typography variant={"body1"} sx={{ wordBreak: "break-word" }}>
               {description}
             </Typography>

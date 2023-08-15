@@ -6,7 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { ColorModeContext, tokens } from "../../../theme";
 import { useTheme } from "@mui/material";
 import { useContext } from "react";
@@ -17,12 +17,23 @@ function SentNotificationCard({ notification }) {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
+  const [description, setDescription] = useState(
+    notification.description.slice(0, 150)
+  );
   
   function formatDateTime(inputDateTime) {
     const dateObject = new Date(inputDateTime);
     const formattedDate = `${dateObject.toLocaleDateString()}, ${dateObject.toLocaleTimeString()}`;
     return formattedDate;
   }
+  const [seen, setSeen] = useState(false);
+
+  const handledescription = () => {
+    seen
+      ? setDescription(notification.description.slice(0, 150))
+      : setDescription(notification.description);
+    setSeen(!seen);
+  };
 
   return (
     <Box
@@ -113,8 +124,33 @@ function SentNotificationCard({ notification }) {
   )}
 </List>
 
-      <Typography variant={"body1"}>{notification.description}</Typography>
-    </Box>
+{description.length <= 150 && notification.description.length > 150 ? (
+            <Typography variant={"body1"} sx={{ wordBreak: "break-word" }}>
+              {description}
+              <span
+                style={{ color: theme.palette.text.light, cursor: "pointer" }}
+                onClick={handledescription}
+              >
+                {" "}
+                ... See more
+              </span>
+            </Typography>
+          ) : notification.description.length <= 150 ? (
+            <Typography variant={"body1"} sx={{ wordBreak: "break-word" }}>
+              {description}
+            </Typography>
+          ) : (
+            <Typography variant={"body1"} sx={{ wordBreak: "break-word" }}>
+              {description}
+              <span
+                style={{ color: theme.palette.text.light, cursor: "pointer" }}
+                onClick={handledescription}
+              >
+                {"    "}... See less
+              </span>
+            </Typography>
+          )}
+     </Box>
   );
 }
 
