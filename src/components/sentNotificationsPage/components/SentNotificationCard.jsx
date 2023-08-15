@@ -17,7 +17,7 @@ function SentNotificationCard({ notification }) {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
-  
+
   function formatDateTime(inputDateTime) {
     const dateObject = new Date(inputDateTime);
     const formattedDate = `${dateObject.toLocaleDateString()}, ${dateObject.toLocaleTimeString()}`;
@@ -57,63 +57,67 @@ function SentNotificationCard({ notification }) {
         to:
       </Typography>
       <List sx={{ width: "100%" }}>
-  {notification.receivers.reduce(
-    (acc, value) => {
-      if (value.log) {
-        acc.seen.push(value.email);
-      } else {
-        acc.unseen.push(value.email);
-      }
-      return acc;
-    },
-    { seen: [], unseen: [] }
-  ).unseen.length > 0 && (
-    <div>
-      <ListItem disablePadding>
-        <ListItemIcon>
-          <CheckOutlinedIcon />
-        </ListItemIcon>
-        <ListItemText primary={`Unseen:`} />
-      </ListItem>
-      {notification.receivers.map((value, index) => (
-        !value.log && (
-          <ListItem key={index}>
-            <ListItemText primary={`${value.email}`} />
-          </ListItem>
-        )
-      ))}
-    </div>
-  )}
-  {notification.receivers.reduce(
-    (acc, value) => {
-      if (value.log) {
-        acc.seen.push(value.email);
-      } else {
-        acc.unseen.push(value.email);
-      }
-      return acc;
-    },
-    { seen: [], unseen: [] }
-  ).seen.length > 0 && (
-    <div>
-      <ListItem disablePadding>
-        <ListItemIcon>
-          <DoneAllOutlinedIcon />
-        </ListItemIcon>
-        <ListItemText primary={`Seen:`} />
-      </ListItem>
-      {notification.receivers.map((value, index) => (
-        value.log && (
-          <ListItem key={index}>
-            <ListItemText primary={`${value.email}`} />
-          </ListItem>
-        )
-      ))}
-    </div>
-  )}
-</List>
+        {notification.receivers.reduce(
+          (acc, value) => {
+            if (value.log) {
+              acc.seen.push(value.email);
+            } else {
+              acc.unseen.push(value.email);
+            }
+            return acc;
+          },
+          { seen: [], unseen: [] }
+        ).unseen.length > 0 && (
+          <div>
+            <ListItem disablePadding>
+              <ListItemIcon>
+                <CheckOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary={`Unseen:`} />
+            </ListItem>
+            {notification.receivers.map(
+              (value, index) =>
+                !value.log && (
+                  <ListItem key={index}>
+                    <ListItemText primary={`${value.email}`} />
+                  </ListItem>
+                )
+            )}
+          </div>
+        )}
+        {notification.receivers.reduce(
+          (acc, value) => {
+            if (value.log) {
+              acc.seen.push(value.email);
+            } else {
+              acc.unseen.push(value.email);
+            }
+            return acc;
+          },
+          { seen: [], unseen: [] }
+        ).seen.length > 0 && (
+          <div>
+            <ListItem disablePadding>
+              <ListItemIcon>
+                <DoneAllOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary={`Seen:`} />
+            </ListItem>
+            {notification.receivers.map(
+              (value, index) =>
+                value.log && (
+                  <ListItem key={index}>
+                    <ListItemText primary={`${value.email}`} />
+                  </ListItem>
+                )
+            )}
+          </div>
+        )}
+      </List>
 
-      <Typography variant={"body1"}>{notification.description}</Typography>
+      <Typography variant={"body1"} sx={{ wordBreak: "break-word" }}>
+        {notification.description}
+      </Typography>
     </Box>
   );
 }
