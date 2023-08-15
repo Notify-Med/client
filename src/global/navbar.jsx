@@ -7,6 +7,7 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsModeOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
+import LogoutIcon from "@mui/icons-material/Logout";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
@@ -233,13 +234,9 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             <IconButton onClick={homeRoute}>
               <AddCircleOutlineIcon />
             </IconButton>
-            <Button
-              variant="text"
-              style={{ color: buttonTextcolor }}
-              onClick={handleLogout}
-            >
-              Log Out
-            </Button>
+            <IconButton variant="text" onClick={handleLogout}>
+              <LogoutIcon />
+            </IconButton>
           </>
         ) : (
           // Render these elements when the user is not logged in

@@ -6,15 +6,35 @@ import { useContext } from "react";
 import AuthContext from "../../../context/AuthProvider";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip from "@mui/material/Tooltip";
+import { useNavigate } from "react-router-dom";
 
 function NotificationCard({ notification }) {
   const theme = useTheme();
   tokens(theme.palette.mode);
   useContext(ColorModeContext);
   const [log, setLog] = useState(notification.log);
+  const [description, setDescription] = useState(
+    notification.description.slice(0, 50)
+  );
+  const [seen, setSeen] = useState(notification.log);
 
-  const { socket } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const { socket, setNotif } = useContext(AuthContext);
+
+  const handleNavigate = (id) => {
+    console.log("Notification: ", notification);
+    setNotif(notification);
+    navigate("/my-notifications/" + notification.id);
+  };
+
+  const handledescription = () => {
+    seen
+      ? setDescription(notification.description.slice(0, 50))
+      : setDescription(notification.description);
+    setSeen(!seen);
+  };
 
   const handleLog = async () => {
     if (!log) {
@@ -32,7 +52,6 @@ function NotificationCard({ notification }) {
 
   return (
     <Box
-      
       width={"100%"}
       display={"flex"}
       flexDirection={"column"}
@@ -72,20 +91,43 @@ function NotificationCard({ notification }) {
           >
             Sender : {notification.sender}
           </Typography>
-          <Typography variant={"body1"}>{notification.description}</Typography>
+          {description.length <= 50 && notification.description.length > 50 ? (
+            <Typography variant={"body1"} sx={{ wordBreak: "break-word" }}>
+              {description}
+              <span
+                style={{ color: theme.palette.text.light, cursor: "pointer" }}
+                onClick={handledescription}
+              >
+                {" "}
+                ... See more
+              </span>
+            </Typography>
+          ) : notification.description.length <= 50 ? (
+            <Typography variant={"body1"} sx={{ wordBreak: "break-word" }}>
+              {description}
+            </Typography>
+          ) : (
+            <Typography variant={"body1"} sx={{ wordBreak: "break-word" }}>
+              {description}
+              <span
+                style={{ color: theme.palette.text.light, cursor: "pointer" }}
+                onClick={handledescription}
+              >
+                {"    "}... See less
+              </span>
+            </Typography>
+          )}
         </Box>
         <Box display="flex" alignItems="center" justifyContent="flex-end">
-          {/* {<RadioButtonUncheckedIcon onClick={handleLog} />} */}
           {!notification.log ? (
             <Tooltip title="Check as seen" arrow>
               <RadioButtonUncheckedIcon
-                sx={{ cursor: "pointer"}}
+                sx={{ cursor: "pointer" }}
                 onClick={handleLog}
-            
               />
             </Tooltip>
           ) : (
-            <RadioButtonCheckedIcon/>
+            <RadioButtonCheckedIcon />
           )}
         </Box>
       </Box>

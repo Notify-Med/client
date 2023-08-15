@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const socket = io("http://localhost:4000");
   const [notifShown, setNotifShown] = useState(false);
   const [usersEmails, setUsersEmails] = useState([]);
+  const [notif, setNotif] = useState("");
 
   return (
     <AuthContext.Provider
@@ -19,6 +20,8 @@ export const AuthProvider = ({ children }) => {
         setNotifShown,
         usersEmails,
         setUsersEmails,
+        notif,
+        setNotif,
       }}
     >
       {children}
