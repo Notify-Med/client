@@ -175,6 +175,10 @@ export const themeSettings = (mode) => {
             action: {
               focus: colors.primary[500],
             },
+            text: {
+              light: colors.primary[700],
+              dark: colors.primary[500]
+            },
           }),
     },
     typography: {
