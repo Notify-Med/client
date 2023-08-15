@@ -5,7 +5,7 @@ const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
-  const socket = io("http://192.168.237.149:4000");
+  const socket = io("http://localhost:4000");
   const [notifShown, setNotifShown] = useState(false);
   const [usersEmails, setUsersEmails] = useState([]);
   const [notif, setNotif] = useState("");
